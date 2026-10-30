@@ -2,88 +2,88 @@
 name: 智慧小勇士
 description: 航海探险手账——糖果贴纸质感、深海描边与按压物理的七巧板思维闯关世界
 colors:
-  sea: "#16314f"
-  sea-deep: "#24507d"
-  sky: "#e4f3f1"
-  sky-deep: "#cfe9e6"
-  sun: "#ffc531"
-  sun-soft: "#fff0bd"
-  coral: "#ff6a55"
-  coral-hover: "#f25a44"
-  coral-soft: "#ffe1db"
-  leaf: "#17a46a"
-  leaf-soft: "#d6f3e2"
-  grape: "#6f55e6"
-  grape-soft: "#e6e0ff"
-  paper: "#fffaf0"
-  line: "#c6d9dc"
-  piece-circle: "#ef7656"
-  piece-semi-a: "#f2bb51"
-  piece-semi-b: "#e89cbe"
-  piece-triangle: "#53a8c6"
-  piece-trapezoid: "#9290d4"
-  piece-center: "#58ad83"
-  piece-large: "#e48643"
+  sea: '#16314f'
+  sea-deep: '#24507d'
+  sky: '#e4f3f1'
+  sky-deep: '#cfe9e6'
+  sun: '#ffc531'
+  sun-soft: '#fff0bd'
+  coral: '#ff6a55'
+  coral-hover: '#f25a44'
+  coral-soft: '#ffe1db'
+  leaf: '#17a46a'
+  leaf-soft: '#d6f3e2'
+  grape: '#6f55e6'
+  grape-soft: '#e6e0ff'
+  paper: '#fffaf0'
+  line: '#c6d9dc'
+  piece-circle: '#ef7656'
+  piece-semi-a: '#f2bb51'
+  piece-semi-b: '#e89cbe'
+  piece-triangle: '#53a8c6'
+  piece-trapezoid: '#9290d4'
+  piece-center: '#58ad83'
+  piece-large: '#e48643'
 typography:
   display:
     fontFamily: "'ZCOOL KuaiLe', 'Nunito Variable', 'Noto Sans SC Variable', sans-serif"
-    fontSize: "38px"
+    fontSize: '38px'
     fontWeight: 400
     lineHeight: 1.3
-    letterSpacing: "0.01em"
+    letterSpacing: '0.01em'
   body:
     fontFamily: "'Nunito Variable', 'Noto Sans SC Variable', sans-serif"
-    fontSize: "15px"
+    fontSize: '15px'
     fontWeight: 500
     lineHeight: 1.65
-    letterSpacing: "normal"
+    letterSpacing: 'normal'
   label:
     fontFamily: "'Nunito Variable', 'Noto Sans SC Variable', sans-serif"
-    fontSize: "13px"
+    fontSize: '13px'
     fontWeight: 700
     lineHeight: 1.5
-    letterSpacing: "normal"
+    letterSpacing: 'normal'
 rounded:
-  input: "12px"
-  button: "14px"
-  card: "20px"
-  panel: "28px"
-  pill: "999px"
+  input: '12px'
+  button: '14px'
+  card: '20px'
+  panel: '28px'
+  pill: '999px'
 components:
   button-primary:
-    backgroundColor: "{colors.coral}"
-    textColor: "#ffffff"
-    rounded: "{rounded.button}"
-    padding: "11px 18px"
+    backgroundColor: '{colors.coral}'
+    textColor: '#ffffff'
+    rounded: '{rounded.button}'
+    padding: '11px 18px'
   button-primary-hover:
-    backgroundColor: "{colors.coral-hover}"
+    backgroundColor: '{colors.coral-hover}'
   button-secondary:
-    backgroundColor: "#ffffff"
-    textColor: "{colors.sea}"
-    rounded: "{rounded.button}"
-    padding: "11px 18px"
+    backgroundColor: '#ffffff'
+    textColor: '{colors.sea}'
+    rounded: '{rounded.button}'
+    padding: '11px 18px'
   button-secondary-hover:
-    backgroundColor: "{colors.sun-soft}"
+    backgroundColor: '{colors.sun-soft}'
   button-sun:
-    backgroundColor: "{colors.sun}"
-    textColor: "{colors.sea}"
-    rounded: "{rounded.button}"
-    padding: "12px 20px"
+    backgroundColor: '{colors.sun}'
+    textColor: '{colors.sea}'
+    rounded: '{rounded.button}'
+    padding: '12px 20px'
   nav-item-active:
-    backgroundColor: "{colors.sun}"
-    textColor: "{colors.sea}"
-    rounded: "{rounded.button}"
-    padding: "11px 16px"
+    backgroundColor: '{colors.sun}'
+    textColor: '{colors.sea}'
+    rounded: '{rounded.button}'
+    padding: '11px 16px'
   tag-pill:
-    backgroundColor: "{colors.grape-soft}"
-    textColor: "#3d2ca8"
-    rounded: "{rounded.pill}"
-    padding: "4px 12px"
+    backgroundColor: '{colors.grape-soft}'
+    textColor: '#3d2ca8'
+    rounded: '{rounded.pill}'
+    padding: '4px 12px'
   star-wallet:
-    backgroundColor: "{colors.sun}"
-    textColor: "{colors.sea}"
-    rounded: "{rounded.pill}"
-    padding: "6px 16px"
+    backgroundColor: '{colors.sun}'
+    textColor: '{colors.sea}'
+    rounded: '{rounded.pill}'
+    padding: '6px 16px'
 ---
 
 # Design System: 智慧小勇士

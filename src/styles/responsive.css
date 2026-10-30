@@ -3,45 +3,30 @@
     padding-left: 55px;
     padding-right: 55px;
   }
-  .welcome-banner {
-    min-height: 330px;
-    padding: 35px 43px;
+  .departure-ticket {
+    min-height: 300px;
+    padding: 42px 48px;
   }
-  .welcome-copy h2 {
-    font-size: 39px;
+  .ticket-copy h2 {
+    font-size: 42px;
   }
-  .banner-geometry > svg {
+  .ticket-art > svg {
     height: 190px;
   }
-  .realm-art {
-    height: 132px;
+  .realm-row {
+    min-height: 120px;
   }
-  .realm-content {
-    padding: 21px 24px;
+  .row-main h3 {
+    font-size: 26px;
   }
-  .realm h3 {
-    font-size: 21px;
+  .row-main p {
+    font-size: 14px;
   }
-  .realm p {
-    font-size: 12px;
+  .captain-invite {
+    padding: 26px 34px;
   }
-  .realm-label {
-    font-size: 10px;
-  }
-  .realm-meta {
-    font-size: 10px;
-  }
-  .next-adventure {
-    padding: 25px 28px;
-  }
-  .contest-invite {
-    padding: 25px 30px;
-  }
-  .contest-invite h3 {
-    font-size: 18px;
-  }
-  .contest-invite p {
-    font-size: 12px;
+  .captain-invite h3 {
+    font-size: 27px;
   }
   .page-title h1 {
     font-size: 32px;
@@ -69,46 +54,44 @@
     font-size: 12px;
     padding: 11px 12px;
   }
-  .welcome-banner {
-    padding: 25px 28px;
+  .departure-ticket {
+    padding: 30px 32px;
+    gap: 24px;
   }
-  .welcome-copy h2 {
-    font-size: 30px;
+  .ticket-copy h2 {
+    font-size: 32px;
   }
-  .banner-geometry {
-    min-width: 200px;
+  .ticket-art {
+    min-height: 170px;
   }
-  .realm-grid {
-    gap: 13px;
+  .ticket-art > svg {
+    height: 150px;
   }
-  .realm-content {
-    padding: 15px;
+  .realm-row {
+    gap: 16px;
+    padding: 15px 22px 15px 15px;
   }
-  .realm h3 {
-    font-size: 16px;
+  .row-art {
+    width: 88px;
+    height: 66px;
   }
-  .realm p {
-    font-size: 9px;
+  .row-art > svg {
+    height: 48px;
+    width: 72px;
   }
-  .home-bottom {
-    grid-template-columns: 1.5fr 1fr;
+  .row-main h3 {
+    font-size: 19px;
+  }
+  .row-go {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  .captain-invite {
+    padding: 18px 22px;
     gap: 14px;
   }
-  .next-adventure {
-    padding: 19px;
-  }
-  .contest-invite {
-    padding: 18px;
-  }
-  .contest-invite h3 {
-    font-size: 13px;
-  }
-  .contest-icon {
-    right: 14px;
-    top: 17px;
-  }
-  .contest-icon svg {
-    width: 22px;
+  .captain-invite h3 {
+    font-size: 20px;
   }
   .page-title h1 {
     font-size: 25px;
@@ -184,79 +167,63 @@
     gap: 5px;
     font-size: 9px;
   }
-  .welcome-copy h2 {
+  .departure-ticket {
+    grid-template-columns: minmax(0, 1fr) 2px minmax(150px, 30%);
+    padding: 26px;
+    gap: 18px;
+    min-height: 240px;
+  }
+  .ticket-copy h2 {
     font-size: 27px;
   }
-  .welcome-banner {
-    padding: 23px;
-    min-height: 278px;
+  .ticket-art {
+    min-height: 150px;
   }
-  .welcome-copy p {
-    font-size: 10px;
+  .ticket-art > svg {
+    height: 128px;
   }
-  .banner-geometry {
-    min-width: 160px;
-    padding-left: 10px;
+  .ticket-art::before {
+    width: 180px;
+    height: 180px;
   }
-  .banner-geometry > svg {
-    height: 145px;
+  .ticket-postmark {
+    width: 64px;
+    height: 64px;
+    font-size: 11px;
   }
-  .geometry-label {
-    font-size: 8px;
+  .deck-rows {
+    gap: 14px;
   }
-  .realm-grid {
-    gap: 10px;
+  .realm-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 14px 18px 14px 14px;
+    min-height: 96px;
   }
-  .realm-art {
-    height: 99px;
+  .row-art {
+    width: 76px;
+    height: 58px;
   }
-  .realm-art > svg {
-    width: 125px;
-    height: 72px;
+  .row-art > svg {
+    height: 42px;
+    width: 62px;
   }
-  .realm-content {
-    padding: 14px 12px;
+  .row-main h3 {
+    font-size: 17px;
   }
-  .realm h3 {
-    font-size: 15px;
+  .row-side strong {
+    font-size: 17px;
   }
-  .realm-label {
-    font-size: 8px;
+  .row-go {
+    display: none;
   }
-  .realm p {
-    font-size: 8px;
-  }
-  .realm-progress {
-    margin-top: 15px;
-  }
-  .realm-meta {
-    font-size: 8px;
-  }
-  .home-bottom {
-    grid-template-columns: 1fr;
-  }
-  .contest-invite {
+  .captain-invite {
     padding: 18px 22px;
   }
-  .contest-invite h3 {
-    font-size: 16px;
+  .captain-invite h3 {
+    font-size: 18px;
   }
-  .contest-invite p {
-    font-size: 11px;
-  }
-  .contest-icon {
-    top: 22px;
-    right: 24px;
-  }
-  .contest-icon svg {
-    width: 35px;
-    height: 35px;
-  }
-  .contest-invite .secondary {
-    position: absolute;
-    right: 24px;
-    bottom: 20px;
-    font-size: 11px;
+  .captain-invite p {
+    font-size: 12px;
   }
   .practice-layout {
     display: flex;
@@ -448,131 +415,77 @@
   .greeting-spark svg {
     width: 24px;
   }
-  .welcome-banner {
-    padding: 25px 25px 22px;
-    min-height: 365px;
+  .departure-ticket {
     display: block;
+    padding: 26px 24px 24px;
+    min-height: 0;
   }
-  .welcome-copy h2 {
-    font-size: 30px;
-    position: relative;
-    z-index: 2;
-    line-height: 1.5;
+  .ticket-copy h2 {
+    font-size: 29px;
   }
-  .welcome-copy p {
-    font-size: 10px;
-    position: relative;
-    z-index: 2;
-    max-width: 220px;
+  .ticket-go {
+    width: 100%;
+    justify-content: center;
   }
-  .welcome-copy .white-button {
-    margin-top: 24px;
-    position: relative;
-    z-index: 3;
+  .ticket-divider {
+    display: none;
   }
-  .banner-geometry {
-    position: absolute;
-    width: 170px;
-    height: 180px;
-    right: 6px;
-    bottom: 8px;
-    opacity: 0.8;
-    transform: rotate(-4deg);
-    gap: 9px;
-    padding: 15px;
+  .ticket-art {
+    margin-top: 22px;
+    min-height: 150px;
   }
-  .banner-geometry > svg {
-    width: 145px;
-    height: 105px;
+  .ticket-art > svg {
+    height: 128px;
+    max-width: 240px;
   }
-  .geometry-label {
-    font-size: 8px;
-    letter-spacing: 0;
+  .ticket-art::before {
+    width: 160px;
+    height: 160px;
   }
-  .floating-star {
-    right: 3px;
-    top: 6px;
+  .ticket-postmark {
+    width: 62px;
+    height: 62px;
+    font-size: 11px;
+    right: 0;
   }
   .floating-small {
     display: none;
   }
-  .banner-ticket {
-    font-size: 9px;
-  }
-  .section-title {
-    margin-top: 26px;
-    margin-bottom: 13px;
-  }
-  .section-title h2 {
-    font-size: 18px;
-  }
-  .section-title > span {
-    font-size: 9px;
-    max-width: 130px;
-    text-align: right;
-  }
-  .realm-grid {
-    grid-template-columns: 1fr;
+  .deck-rows {
     gap: 13px;
-  }
-  .realm {
-    display: grid;
-    grid-template-columns: 117px 1fr;
-    align-items: stretch;
-  }
-  .realm-art {
-    height: auto;
-    min-height: 155px;
-  }
-  .realm-art > svg {
-    width: 95px;
-    height: 90px;
-  }
-  .realm-content {
-    padding: 16px 16px 13px;
-  }
-  .realm h3 {
-    font-size: 19px;
-  }
-  .realm-label {
-    font-size: 9px;
-  }
-  .realm p {
-    font-size: 10px;
-  }
-  .realm-meta {
-    font-size: 10px;
-  }
-  .realm-meta strong {
-    font-size: 14px;
-  }
-  .realm-meta small {
-    font-size: 10px;
-  }
-  .realm-progress {
-    margin-top: 15px;
-  }
-  .home-bottom {
     margin-top: 20px;
   }
-  .contest-invite h3 {
-    font-size: 14px;
+  .realm-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 14px;
+    padding: 15px;
+    min-height: 0;
   }
-  .contest-invite p {
-    font-size: 10px;
-    max-width: 190px;
+  .row-art {
+    width: 84px;
+    height: 64px;
   }
-  .contest-invite .secondary {
-    position: static;
-    font-size: 11px;
-    margin-top: 14px;
+  .row-art > svg {
+    height: 46px;
+    width: 68px;
   }
-  .path-stop {
-    width: 35px;
+  .row-label {
+    display: none;
   }
-  .path-stop > span:first-child {
-    width: 32px;
-    height: 32px;
+  .row-main p {
+    display: none;
+  }
+  .row-progress {
+    margin-top: 11px;
+  }
+  .row-side strong {
+    font-size: 15px;
+  }
+  .captain-invite h3 {
+    font-size: 18px;
+  }
+  .captain-invite p {
+    font-size: 12px;
   }
   .page-title .level-status {
     font-size: 9px;

@@ -1,18 +1,25 @@
-import { bounds, pathOf, piece, placedRing, polygon, silhouette } from '../../tangram/geometry'
-import type { TangramPuzzle } from '../../core/types'
+import {
+  bounds,
+  pathOf,
+  piece,
+  placedRing,
+  polygon,
+  silhouette,
+} from '../../tangram/geometry';
+import type { TangramPuzzle } from '../../core/types';
 
 export function MiniTangram({
   puzzle,
   colored = false,
   className = '',
 }: {
-  puzzle: TangramPuzzle
-  colored?: boolean
-  className?: string
+  puzzle: TangramPuzzle;
+  colored?: boolean;
+  className?: string;
 }) {
   const target = silhouette(puzzle.placements),
     b = bounds(target),
-    pad = 0.2
+    pad = 0.2;
   return (
     <svg
       className={className}
@@ -35,5 +42,5 @@ export function MiniTangram({
         <path d={pathOf(target)} fill="currentColor" fillRule="evenodd" />
       )}
     </svg>
-  )
+  );
 }

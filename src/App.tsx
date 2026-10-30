@@ -34,6 +34,7 @@ import {
   X,
 } from 'lucide-react';
 import { MiniTangram } from './components/tangram/MiniTangram';
+import { MatchSticks } from './components/ui/MatchSticks';
 import { Stars } from './components/ui/Stars';
 import { EmptyState } from './components/ui/EmptyState';
 import { GamePanel } from './components/GamePanel';
@@ -64,14 +65,20 @@ import {
 } from './core/routes';
 import { sorted } from './core/collections';
 import { playSound, setSoundEnabled } from './core/sound';
-import type { CheckResult, Draft, ExamType, GameKind, SaveData } from './core/types';
+import type {
+  CheckResult,
+  Draft,
+  ExamType,
+  GameKind,
+  SaveData,
+} from './core/types';
 import './styles/app.css';
 import './styles/game.css';
 import './styles/growth.css';
 import './styles/responsive.css';
 import './styles/accessibility.css';
 
-const counts = { draw: TANGRAMS.length, match: 60 };
+const counts = { draw: TANGRAMS.length, match: MATCHES.length };
 const realms = [
   {
     kind: 'draw' as const,
@@ -94,7 +101,10 @@ const formatTime = (seconds: number) =>
     .padStart(2, '0')}:${Math.floor(Math.max(0, seconds) % 60)
     .toString()
     .padStart(2, '0')}`;
-
+const stopName = (kind: 'draw' | 'match', index: number) =>
+  kind === 'draw'
+    ? TANGRAMS[index].name
+    : `${operationLabel[MATCHES[index].operation]}${MATCHES[index].count}根火柴`;
 
 export function AppContent() {
   const location = useLocation();
@@ -156,10 +166,26 @@ export function AppContent() {
     ]).size;
   const nextLevel = (kind: 'draw' | 'match') => {
     let n = 0;
-    while (n < counts[kind] - 1 && (data.stars[levelKey(kind, n)] || data.drafts[levelKey(kind, n)]?.completed))
+    while (
+      n < counts[kind] - 1 &&
+      (data.stars[levelKey(kind, n)] ||
+        data.drafts[levelKey(kind, n)]?.completed)
+    )
       n++;
     return n;
   };
+  // 出发票的「下一站」：进度更深的岛优先（并列取图形探索岛），全部通关后转向竞赛。
+  const drawFrontier = nextLevel('draw'),
+    matchFrontier = nextLevel('match'),
+    drawComplete = completed('draw') >= counts.draw,
+    matchComplete = completed('match') >= counts.match,
+    nextStop: { kind: 'draw' | 'match' | null; index: number } = drawComplete
+      ? matchComplete
+        ? { kind: null, index: 0 }
+        : { kind: 'match', index: matchFrontier }
+      : matchComplete || matchFrontier <= drawFrontier
+        ? { kind: 'draw', index: drawFrontier }
+        : { kind: 'match', index: matchFrontier };
 
   const practiceKind = page === 'draw' || page === 'match' ? page : null;
   const level = practiceKind
@@ -557,203 +583,129 @@ export function AppContent() {
                   </h1>
                   <p>观察、尝试、再想一想，新的发现就在下一关。</p>
                 </div>
-                <span className="date-pill">
-                  <Compass size={16} />
-                  每一步，都是新发现
-                </span>
               </div>
-              <section className="welcome-banner">
-                <div className="welcome-copy">
-                  <span className="banner-ticket">
-                    <Flag size={14} />
-                    你的思维探险，正在继续
-                  </span>
-                  <h2>
-                    小小脑袋，
-                    <br />
-                    装着大大的可能。
-                  </h2>
-                  <p>
-                    用七块拼板探索形状，用一根火柴点亮灵感。
-                    <br className="desktop-break" />
-                    准备好了吗？今天的挑战等着你。
-                  </p>
-                  <button
-                    className="white-button"
-                    onClick={() => navigate('draw')}
-                  >
-                    <Play size={17} fill="currentColor" />
-                    {totalDone ? '继续我的探险' : '开始第一关'}
-                    <ArrowRight size={18} />
-                  </button>
+              <section className="departure-ticket" aria-label="下一站">
+                <div className="ticket-copy">
+                  {nextStop.kind === null ? (
+                    <>
+                      <h2>两座岛都被你走遍啦！</h2>
+                      <p className="ticket-route">
+                        下一场冒险，在竞赛场上等你。
+                      </p>
+                      <button
+                        className="primary ticket-go"
+                        onClick={() => navigate('contest')}
+                      >
+                        <Trophy size={18} />
+                        进入模拟竞赛
+                        <ArrowRight size={18} />
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <h2>{stopName(nextStop.kind, nextStop.index)}</h2>
+                      <p className="ticket-route">
+                        {nextStop.kind === 'draw' ? '图形探索岛' : '火柴思维谷'}{' '}
+                        · 第 {nextStop.index + 1} 关 ·{' '}
+                        {nextStop.kind === 'draw'
+                          ? '观察力 × 空间想象'
+                          : '逻辑力 × 数字挑战'}
+                      </p>
+                      <button
+                        className="primary ticket-go"
+                        onClick={() =>
+                          navigate(
+                            nextStop.kind as 'draw' | 'match',
+                            nextStop.index,
+                          )
+                        }
+                      >
+                        <Play size={17} fill="currentColor" />
+                        {totalDone ? '继续探险' : '开始第一关'}
+                        <ArrowRight size={18} />
+                      </button>
+                    </>
+                  )}
                 </div>
-                <div className="banner-geometry">
-                  <MiniTangram puzzle={TANGRAMS[5]} colored />
-                  <span className="geometry-label">七块拼板 · 无限可能</span>
+                <div className="ticket-divider" aria-hidden="true">
+                  <span />
+                  <span />
+                </div>
+                <div className="ticket-art" aria-hidden="true">
+                  {nextStop.kind === 'match' ? (
+                    <MatchSticks className="ticket-match" />
+                  ) : nextStop.kind === 'draw' ? (
+                    <MiniTangram puzzle={TANGRAMS[nextStop.index]} />
+                  ) : (
+                    <MiniTangram puzzle={TANGRAMS[5]} colored />
+                  )}
+                  <span className="ticket-postmark">下一站</span>
                   <span className="floating-star">
-                    <Star size={26} fill="currentColor" />
+                    <Star size={24} fill="currentColor" />
                   </span>
                   <span className="floating-small">
-                    <Sparkles size={20} />
+                    <Sparkles size={18} />
                   </span>
                 </div>
               </section>
-              <div className="section-title">
-                <h2>今天，想挑战什么？</h2>
-                <span>选一个喜欢的方向，开始探索</span>
-              </div>
-              <section className="realm-grid">
+              <section className="deck-rows" aria-label="选择探险区域">
                 {realms.map((r) => (
                   <button
-                    className={`realm ${r.color}`}
+                    className={`realm-row ${r.color}`}
                     key={r.kind}
                     onClick={() => navigate(r.kind)}
                   >
-                    <div className="realm-art">
+                    <span className="row-art" aria-hidden="true">
                       {r.kind === 'match' ? (
-                        <svg viewBox="0 0 220 100" aria-hidden="true">
-                          <g
-                            stroke="#b97a49"
-                            strokeWidth="7"
-                            strokeLinecap="round"
-                          >
-                            {[
-                              [36, 22, 78, 22],
-                              [83, 28, 83, 47],
-                              [36, 52, 78, 52],
-                              [83, 58, 83, 78],
-                              [36, 84, 78, 84],
-                              [106, 52, 134, 52],
-                              [120, 38, 120, 66],
-                              [153, 24, 185, 24],
-                              [190, 30, 190, 77],
-                              [153, 83, 185, 83],
-                            ].map((p, i) => (
-                              <line
-                                key={i}
-                                x1={p[0]}
-                                y1={p[1]}
-                                x2={p[2]}
-                                y2={p[3]}
-                              />
-                            ))}
-                          </g>
-                          <g fill="#df7553">
-                            {[
-                              [78, 22],
-                              [83, 47],
-                              [78, 52],
-                              [83, 78],
-                              [78, 84],
-                              [134, 52],
-                              [120, 66],
-                              [185, 24],
-                              [190, 77],
-                              [185, 83],
-                            ].map((p, i) => (
-                              <circle key={i} cx={p[0]} cy={p[1]} r="4.5" />
-                            ))}
-                          </g>
-                        </svg>
+                        <MatchSticks />
                       ) : (
                         <MiniTangram puzzle={TANGRAMS[8]} />
                       )}
-                    </div>
-                    <div className="realm-content">
-                      <span className="realm-label">{r.label}</span>
-                      <h3>
-                        {r.name}
-                        <ArrowRight size={19} />
-                      </h3>
+                    </span>
+                    <div className="row-main">
+                      <h3>{r.name}</h3>
                       <p>{r.description}</p>
-                      <div className="realm-progress">
+                      <span className="row-progress">
                         <span
                           style={{
                             width: `${(completed(r.kind) / counts[r.kind]) * 100}%`,
                           }}
                         />
-                      </div>
-                      <div className="realm-meta">
-                        <span>{kindLabel[r.kind]}</span>
-                        <strong>
-                          {completed(r.kind)}
-                          <small> / {counts[r.kind]} 关</small>
-                        </strong>
-                      </div>
+                      </span>
                     </div>
+                    <div className="row-side">
+                      <span className="row-label">{r.label}</span>
+                      <strong>
+                        {completed(r.kind)}
+                        <small> / {counts[r.kind]} 关</small>
+                      </strong>
+                    </div>
+                    <span className="row-go">
+                      上船
+                      <ArrowRight size={16} />
+                    </span>
                   </button>
                 ))}
               </section>
-              <section className="home-bottom">
-                <div className="next-adventure">
-                  <div className="section-title">
-                    <h2>我的探险足迹</h2>
-                    <span>
-                      {completed('draw')} / {counts.draw} 关
-                    </span>
-                  </div>
-                  <p>图形探索岛 · 把观察变成你的超能力</p>
-                  <div className="path-map">
-                    <svg
-                      viewBox="0 0 650 110"
-                      preserveAspectRatio="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M35 65 C100 5 130 5 185 52 S270 105 320 56 S410 5 470 55 S555 105 615 45"
-                        fill="none"
-                        stroke="#cbd9cb"
-                        strokeWidth="3"
-                        strokeDasharray="6 8"
-                      />
-                    </svg>
-                    {Array.from({ length: 6 }, (_, i) => {
-                      const earned = data.stars[levelKey('draw', i)] || 0,
-                        finished =
-                          earned > 0 || !!data.drafts[levelKey('draw', i)]?.completed,
-                        unlocked = i <= nextLevel('draw');
-                      return (
-                        <button
-                          key={i}
-                          className={`path-stop stop-${i} ${finished ? 'done' : unlocked ? 'current' : 'locked'}`}
-                          disabled={!unlocked}
-                          onClick={() => navigate('draw', i)}
-                          aria-label={`分解第${i + 1}关${unlocked ? '' : '，未解锁'}`}
-                        >
-                          <span>
-                            {finished ? (
-                              <Check size={22} />
-                            ) : unlocked ? (
-                              <Flag size={21} />
-                            ) : (
-                              <LockKeyhole size={17} />
-                            )}
-                          </span>
-                          <small>第{i + 1}关</small>
-                          {earned > 0 && <Stars value={earned} size={10} />}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="contest-invite">
-                  <div className="contest-icon">
-                    <Trophy size={30} />
-                  </div>
+              <section className="captain-invite">
+                <span className="invite-icon" aria-hidden="true">
+                  <Trophy size={30} />
+                </span>
+                <div className="invite-copy">
                   <h3>来一场思维挑战赛？</h3>
                   <p>
                     15分钟，挑战更专注的自己。
                     <br />
                     还有专属荣誉奖状等你来拿。
                   </p>
-                  <button
-                    className="secondary"
-                    onClick={() => navigate('contest')}
-                  >
-                    进入模拟竞赛
-                    <ArrowRight size={16} />
-                  </button>
                 </div>
+                <button
+                  className="secondary"
+                  onClick={() => navigate('contest')}
+                >
+                  进入模拟竞赛
+                  <ArrowRight size={16} />
+                </button>
               </section>
               <div className="gentle-footer">
                 <ShieldCheck size={16} />
@@ -1235,7 +1187,10 @@ export function AppContent() {
                     icon={BookOpen}
                     title="错题本还是空白的"
                     note="遇到暂时没想通的题，也没关系。它们会在这里等你再试一次。"
-                    action={{ label: '去发现新挑战', onClick: () => navigate('match') }}
+                    action={{
+                      label: '去发现新挑战',
+                      onClick: () => navigate('match'),
+                    }}
                   />
                 ))}
               {growthTab === 'scores' && (

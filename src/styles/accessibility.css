@@ -15,14 +15,10 @@
 }
 .breadcrumb,
 .autosave,
-.realm-label,
-.realm-meta,
-.realm-meta small,
-.realm p,
-.section-title > span,
-.next-adventure > p,
+.row-label,
+.row-side strong small,
+.row-main p,
 .gentle-footer,
-.geometry-label,
 .date-pill,
 .profile small,
 .profile strong,
@@ -43,12 +39,9 @@
   font-size: 11px;
 }
 .autosave,
-.realm-label,
-.realm-meta,
-.realm-meta small,
-.realm p,
-.section-title > span,
-.next-adventure > p,
+.row-label,
+.row-side strong small,
+.row-main p,
 .gentle-footer,
 .date-pill,
 .profile small,
@@ -66,14 +59,10 @@
   color: #687861;
 }
 .page-title p,
-.realm p {
+.row-main p {
   font-size: 12px;
 }
-.realm p {
-  white-space: normal;
-  min-height: 22px;
-}
-.realm h3 {
+.row-main h3 {
   font-size: 20px;
 }
 .nav-item {
@@ -92,11 +81,11 @@
 .check-button {
   font-size: 14px;
 }
-.contest-invite p {
+.invite-copy p {
   font-size: 12px;
   color: #7c6f52;
 }
-.contest-invite .secondary {
+.captain-invite .secondary {
   font-size: 12px;
 }
 .piece-selector button {
@@ -181,15 +170,14 @@
   .nav-item {
     font-size: 12px;
   }
-  .realm h3 {
+  .row-main h3 {
     font-size: 18px;
   }
-  .realm-label,
-  .realm-meta,
-  .realm-meta small {
+  .row-label,
+  .row-side strong small {
     font-size: 10px;
   }
-  .realm p {
+  .row-main p {
     font-size: 11px;
   }
   .level-item strong {
@@ -213,15 +201,11 @@
   .nav-item {
     font-size: 14px;
   }
-  .realm h3 {
+  .row-main h3 {
     font-size: 19px;
   }
-  .realm p {
-    font-size: 11px;
-  }
-  .realm-label,
-  .realm-meta,
-  .realm-meta small {
+  .row-label,
+  .row-side strong small {
     font-size: 10px;
   }
   .focus-button {

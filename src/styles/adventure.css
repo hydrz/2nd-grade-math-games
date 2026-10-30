@@ -284,10 +284,9 @@ select {
 /* 页面各核心块：统一在 2K 屏居中，宽度自适应且有优美的最大约束 */
 .topbar,
 .page-title,
-.welcome-banner,
-.section-title,
-.realm-grid,
-.home-bottom,
+.departure-ticket,
+.deck-rows,
+.captain-invite,
 .gentle-footer,
 .practice-layout,
 .exam-navigation,
@@ -358,221 +357,168 @@ select {
   font-size: 13px;
   color: var(--muted);
 }
-.section-title h2 {
-  font-size: 28px;
-}
-.section-title > span {
-  font-size: 14px;
-  color: var(--muted);
-  font-weight: 700;
-}
 
-/* 首页横幅：出海启航 */
-.welcome-banner {
-  background:
-    radial-gradient(circle at 12% 120%, #2f78b4 0 22%, transparent 23%),
-    radial-gradient(circle at 98% -10%, #2f78b4 0 26%, transparent 27%),
-    var(--sea-2);
+/* 首页出发票：今天的启程牌 */
+.departure-ticket {
+  background: var(--paper);
   border: 2.5px solid var(--sea);
-  border-radius: 28px;
-  color: #fff;
-  box-shadow: 0 16px 32px -12px rgba(22, 49, 79, 0.35);
-  min-height: 310px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 36px 48px;
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  padding: 40px 44px;
 }
-.banner-ticket {
-  background: var(--sun);
-  color: var(--sea);
-  padding: 4px 14px 4px 10px;
-  border-radius: 999px;
+.ticket-copy h2 {
+  font-size: 38px;
+  color: var(--ink);
+}
+.ticket-route {
+  color: var(--muted);
   font-size: 14px;
-  font-weight: 800;
-  box-shadow: 0 2px 0 var(--sea);
 }
-.welcome-copy h2 {
-  color: #fff;
-  font-size: 44px;
-  line-height: 1.25;
-  letter-spacing: 0.02em;
-  margin-top: 16px;
-}
-.welcome-copy p {
-  color: #d6ecf1;
+.ticket-go {
   font-size: 16px;
-  line-height: 1.8;
-  margin-top: 12px;
 }
-.welcome-copy .white-button {
-  font-size: 16px;
-  margin-top: 24px;
+.ticket-divider {
+  border-left-color: #b6ccd0;
 }
-.banner-geometry > svg {
-  filter: drop-shadow(0 12px 0 rgba(15, 34, 55, 0.4));
+.ticket-divider > span {
+  background: var(--sky);
+  border-color: #b6ccd0;
 }
-.geometry-label {
-  color: #cfe9ee;
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  font-weight: 700;
+.ticket-art {
+  color: var(--sea);
+}
+.ticket-art::before {
+  content: '';
+  position: absolute;
+  width: 235px;
+  height: 235px;
+  border-radius: 50%;
+  background: var(--sun-soft);
+}
+.ticket-art > svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 10px 0 rgba(22, 49, 79, 0.12));
+}
+.ticket-postmark {
+  z-index: 2;
+  color: #d94a35;
+  background: rgba(255, 255, 255, 0.72);
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 15px;
+  animation: postmark-float 4.5s ease-in-out infinite;
+}
+@keyframes postmark-float {
+  0%,
+  100% {
+    transform: rotate(11deg) translateY(0);
+  }
+  50% {
+    transform: rotate(7deg) translateY(-5px);
+  }
 }
 .floating-star {
   color: var(--sun);
 }
 .floating-small {
-  color: #8fd1c9;
+  color: var(--grape);
 }
 
-/* 三大领域卡片：彩色贴纸 */
-.realm-grid {
-  gap: 24px;
-  margin-top: 8px;
+/* 舱位行：两座岛的登船口 */
+.deck-rows {
+  gap: 22px;
+  margin-top: 28px;
 }
-.realm {
+.realm-row {
   background: var(--paper);
   border: 2.5px solid var(--sea);
-  border-radius: 22px;
+  border-radius: 20px;
   box-shadow: var(--shadow);
-  transform: none !important;
+  padding: 20px 32px 20px 22px;
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease;
 }
-.realm:hover {
+.realm-row:hover {
+  transform: translateY(-3px);
   box-shadow:
-    0 8px 0 var(--sea),
-    0 18px 28px -8px rgba(22, 49, 79, 0.22) !important;
-  transform: translateY(-4px) !important;
+    0 7px 0 var(--sea),
+    0 18px 28px -8px rgba(22, 49, 79, 0.22);
 }
-.realm-art {
+.row-art {
   background: var(--leaf-soft);
   color: var(--leaf);
-  border-bottom: 2.5px solid var(--sea);
-  height: 132px;
+  border: 2px dashed rgba(22, 49, 79, 0.25);
 }
-.realm.orange .realm-art {
-  background: var(--sun-soft);
-  color: #d98a00;
-}
-.realm.purple .realm-art {
+.realm-row.purple .row-art {
   background: var(--grape-soft);
   color: var(--grape);
 }
-.realm-art > svg {
-  height: 92px;
-  width: 175px;
-}
-.realm h3 {
-  font-size: 26px;
+.row-main h3 {
+  font-size: 24px;
   color: var(--ink);
 }
-.realm h3 svg {
-  color: var(--sea);
-}
-.realm-label {
+.row-main p {
   color: var(--muted);
-  font-weight: 800;
   font-size: 13px;
 }
-.realm p {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-/* 进度条优化：清爽胶囊轨 */
-.realm-progress {
+.row-progress {
   height: 10px;
   background: #d8e9eb;
-  border: 0;
   border-radius: 999px;
-  overflow: hidden;
 }
-.realm-progress > span {
+.row-progress > span {
   background: var(--leaf);
   border-radius: 999px;
 }
-.realm.orange .realm-progress > span {
-  background: var(--sun);
-}
-.realm.purple .realm-progress > span {
+.realm-row.purple .row-progress > span {
   background: var(--grape);
 }
-.realm-meta {
+.row-label {
   color: var(--muted);
-  font-size: 13px;
+  font-weight: 800;
+  font-size: 12px;
 }
-.realm-meta strong {
+.row-side strong {
   color: var(--ink);
-  font-size: 17px;
+  font-size: 21px;
 }
-.realm-meta small {
+.row-side strong small {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
+}
+.row-go {
+  background: var(--sun);
+  color: var(--sea);
+  border: 2px solid var(--sea);
+  box-shadow: 0 3px 0 var(--sea);
+  font-size: 14px;
+}
+.realm-row:hover .row-go {
+  background: #ffd45e;
 }
 
-/* 探险足迹与竞赛邀请 */
-.next-adventure {
-  background: var(--paper);
-  border: 2.5px solid var(--sea);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  padding: 26px 30px;
-}
-.next-adventure .section-title h2 {
-  font-size: 24px;
-}
-.next-adventure > p {
-  font-size: 14px;
-  color: var(--muted);
-}
-.path-stop > span:first-child {
-  background: #fff;
-  border: 2.5px solid var(--sea);
-  color: var(--muted);
-  width: 44px;
-  height: 44px;
-  box-shadow: 0 2px 0 var(--sea);
-}
-.path-stop.done > span:first-child {
-  background: var(--leaf);
-  color: #fff;
-}
-.path-stop.current > span:first-child {
-  background: var(--coral);
-  color: #fff;
-  outline: 5px solid var(--coral-soft);
-  box-shadow: 0 4px 0 var(--sea);
-}
-.path-stop small {
-  color: var(--muted);
-  font-size: 13px;
-}
-.path-stop.current small {
-  color: var(--coral);
-  font-weight: 800;
-}
-.contest-invite {
+/* 船长邀请与页面收尾 */
+.captain-invite {
   background: var(--sun);
   border: 2.5px solid var(--sea);
   border-radius: 24px;
   box-shadow: var(--shadow);
-  padding: 26px 30px;
-  transform: none !important;
+  padding: 26px 32px;
 }
-.contest-icon {
+.invite-icon {
   color: var(--sea);
 }
-.contest-invite h3 {
-  font-size: 24px;
+.captain-invite h3 {
+  font-size: 25px;
   color: var(--sea);
 }
-.contest-invite p {
+.captain-invite p {
   color: #5b4300;
   font-size: 15px;
 }
-.contest-invite .secondary {
+.captain-invite .secondary {
   background: #fff;
   color: var(--sea);
   font-size: 15px;
@@ -1222,25 +1168,21 @@ select {
     width: calc(100% - 260px);
     padding: 0 clamp(40px, 4.5vw, 96px) 56px;
   }
-  .welcome-banner {
-    min-height: 350px;
-    padding: 44px 60px;
+  .departure-ticket {
+    min-height: 316px;
+    padding: 48px 56px;
   }
-  .welcome-copy h2 {
-    font-size: 52px;
+  .ticket-copy h2 {
+    font-size: 44px;
   }
-  .banner-geometry > svg {
-    height: 210px;
+  .ticket-art > svg {
+    height: 205px;
   }
-  .realm-art {
-    height: 148px;
+  .realm-row {
+    min-height: 124px;
   }
-  .realm-art > svg {
-    height: 105px;
-    width: 200px;
-  }
-  .realm h3 {
-    font-size: 28px;
+  .row-main h3 {
+    font-size: 26px;
   }
 
   .exam-timer {
@@ -1276,8 +1218,8 @@ select {
     width: calc(100% - 210px);
     padding: 0 28px 32px;
   }
-  .welcome-copy h2 {
-    font-size: 38px;
+  .ticket-copy h2 {
+    font-size: 32px;
   }
   .page-title h1 {
     font-size: 32px;
@@ -1293,8 +1235,8 @@ select {
     width: calc(100% - 190px);
     padding: 0 20px 24px;
   }
-  .welcome-copy h2 {
-    font-size: 32px;
+  .ticket-copy h2 {
+    font-size: 28px;
   }
   .nav-item {
     font-size: 14px;
@@ -1310,23 +1252,21 @@ select {
     width: 100%;
     padding: 0 16px 24px;
   }
-  .welcome-copy h2 {
-    font-size: 32px;
+  .ticket-copy h2 {
+    font-size: 30px;
   }
-  .welcome-copy p {
-    font-size: 14px;
+  .row-main h3 {
+    font-size: 20px;
   }
-  .page-title h1 {
-    font-size: 28px;
+  .row-go {
+    display: none;
   }
-  .realm-art {
-    border-bottom: 0;
-    border-right: 2.5px solid var(--sea);
+  .captain-invite {
+    flex-wrap: wrap;
   }
-  .banner-geometry {
-    opacity: 0.3;
-    right: -20px;
-    bottom: -10px;
+  .captain-invite .secondary {
+    width: 100%;
+    justify-content: center;
   }
   .big-score {
     font-size: 68px;

@@ -14,7 +14,7 @@ import { MATCHES } from '../match/matches';
 import { TANGRAMS } from '../tangram/tangrams';
 import { emptyDraft, starsFor } from '../core/storage';
 import { checkAssembly } from '../tangram/geometry';
-import { AssemblyCanvas } from './tangram/AssemblyCanvas'
+import { AssemblyCanvas } from './tangram/AssemblyCanvas';
 import { DrawCanvas } from './tangram/DrawCanvas';
 import { checkGame, scatter } from '../core/games';
 import { MatchCanvas } from './match/MatchCanvas';
@@ -118,11 +118,11 @@ export function GamePanel({
                 <p
                   className={`assemble-feedback ${assembleCheck.ok ? 'good' : ''}`}
                   role="status"
-                  >
-                    {assembleCheck.ok ? <Check size={14} /> : null}
-                    {assembleCheck.message}
-                  </p>
-                )}
+                >
+                  {assembleCheck.ok ? <Check size={14} /> : null}
+                  {assembleCheck.message}
+                </p>
+              )}
             </section>
             <section className="studio-pane">
               <div className="pane-heading">

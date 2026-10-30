@@ -1,4 +1,4 @@
-import { Star } from 'lucide-react'
+import { Star } from 'lucide-react';
 
 export function Stars({ value, size = 15 }: { value: number; size?: number }) {
   return (
@@ -12,5 +12,5 @@ export function Stars({ value, size = 15 }: { value: number; size?: number }) {
         />
       ))}
     </span>
-  )
+  );
 }

@@ -454,9 +454,7 @@ export function checkDrawing(
       const bad = faces.filter((_, i) => choices[i].length === 0);
       const near = bad.length
         ? Math.min(
-            ...bad.flatMap((f) =>
-              PIECES.map((piece) => congruenceError(f, piece)),
-            ),
+            ...bad.flatMap((f) => PIECES.map((def) => congruenceError(f, def))),
           )
         : Infinity;
       return {

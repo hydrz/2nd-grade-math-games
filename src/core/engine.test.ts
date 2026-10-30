@@ -6,7 +6,12 @@ import {
   checkDrawing,
   silhouette,
 } from '../tangram/geometry';
-import { MATCHES, checkMatch, parseEquation, solveMatch } from '../match/matches';
+import {
+  MATCHES,
+  checkMatch,
+  parseEquation,
+  solveMatch,
+} from '../match/matches';
 import type { TangramPuzzle } from './types';
 
 const separated: TangramPuzzle = {

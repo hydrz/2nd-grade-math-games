@@ -1,4 +1,4 @@
-import { ArrowRight, type LucideIcon } from 'lucide-react'
+import { ArrowRight, type LucideIcon } from 'lucide-react';
 
 export function EmptyState({
   icon: Icon,
@@ -7,13 +7,17 @@ export function EmptyState({
   small = false,
   action,
 }: {
-  icon: LucideIcon
-  title: string
-  note: string
-  small?: boolean
-  action?: { label: string; kind?: 'primary' | 'secondary'; onClick: () => void }
+  icon: LucideIcon;
+  title: string;
+  note: string;
+  small?: boolean;
+  action?: {
+    label: string;
+    kind?: 'primary' | 'secondary';
+    onClick: () => void;
+  };
 }) {
-  const Heading = small ? 'h3' : 'h2'
+  const Heading = small ? 'h3' : 'h2';
   return (
     <div className="empty-state">
       <Icon size={small ? 42 : 45} />
@@ -26,5 +30,5 @@ export function EmptyState({
         </button>
       )}
     </div>
-  )
+  );
 }
