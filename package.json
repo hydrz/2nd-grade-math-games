@@ -1,5 +1,5 @@
 {
-  "name": "vite-react",
+  "name": "little-math-adventurer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,16 +7,27 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
     "preview": "vite preview",
     "edgeone:dev": "edgeone makers dev",
     "edgeone:deploy": "edgeone makers deploy"
   },
   "dependencies": {
+    "@fontsource-variable/noto-sans-sc": "^5.3.1",
+    "@fontsource-variable/nunito": "^5.3.0",
+    "@fontsource/zcool-kuaile": "^5.3.0",
+    "jsts": "^2.12.1",
+    "lucide-react": "^1.65.0",
+    "polygon-clipping": "^0.15.7",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@playwright/test": "^1.64.1",
+    "@types/jsts": "^0.17.24",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -26,6 +37,7 @@
     "globals": "^15.9.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "vitest": "^2.1.9"
   }
 }

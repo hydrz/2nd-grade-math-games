@@ -1,0 +1,730 @@
+[
+  {
+    "id": "telescope",
+    "name": "天文望远镜",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0.0,
+        "y": 0.0,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 1.0,
+        "y": 3.82842712474619,
+        "angle": 315,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 1.2928932188134525,
+        "y": 2.7071067811865475,
+        "angle": 135,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 0.29289321881345254,
+        "y": 4.535533905932738,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": -0.35355339059327373,
+        "y": 0.35355339059327373,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 0.5,
+        "y": 0.5,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 1.6464466094067263,
+        "y": 2.353553390593274,
+        "angle": 315,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "solar",
+    "name": "太阳能热水器",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0.0,
+        "y": 0.0,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 3.82842712474619,
+        "y": 1.0,
+        "angle": 0,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 2.82842712474619,
+        "y": 1.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 1.414213562373095,
+        "y": 0.0,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": -0.35355339059327373,
+        "y": 0.35355339059327373,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 1.7677669529663689,
+        "y": -0.35355339059327373,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 3.181980515339464,
+        "y": -0.35355339059327373,
+        "angle": 45,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "horse",
+    "name": "小马",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0.0,
+        "y": 2.82842712474619,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": -1.0,
+        "y": 1.0,
+        "angle": 315,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 3.0,
+        "y": 3.0,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 1.0,
+        "y": 2.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "circle",
+        "x": 0.5,
+        "y": 2.82842712474619,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 3.0,
+        "y": 2.5,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 2.767766952966369,
+        "y": 1.3535533905932737,
+        "angle": 225,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "moth",
+    "name": "飞蛾",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 3.0,
+        "y": 2.82842712474619,
+        "angle": 90,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 2.0,
+        "y": 2.414213562373095,
+        "angle": 90,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 1.0,
+        "y": 1.0,
+        "angle": 270,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 0.0,
+        "y": 2.82842712474619,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 1.5,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 1.5,
+        "y": 1.0,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 1.5,
+        "y": 2.414213562373095,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "car",
+    "name": "无顶轿车",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 5.65685424949238,
+        "y": 2.0,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 2.0,
+        "y": 1.0,
+        "angle": 90,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 1.0,
+        "y": 1.0,
+        "angle": 315,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 1.0,
+        "y": 1.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 3.0526315789473686,
+        "y": 0.3157894736842105,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 1.4605263157894737,
+        "y": 2.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 4.078947368421052,
+        "y": 2.0,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "gull",
+    "name": "海鸥",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 4.82842712474619,
+        "y": 2.0,
+        "angle": 135,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 4.121320343559642,
+        "y": 1.2928932188134525,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 2.0,
+        "y": 2.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 2.0,
+        "y": 2.0,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 4.474873734152916,
+        "y": 1.6464466094067263,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 3.414213562373095,
+        "y": 0.8421052631578947,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 3.414213562373095,
+        "y": 2.5,
+        "angle": 180,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "cyclist",
+    "name": "青年骑车",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 2.0,
+        "y": -2.0,
+        "angle": 315,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 3.5355339059327373,
+        "y": -0.7071067811865475,
+        "angle": 315,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 3.1213203435596424,
+        "y": -1.7071067811865475,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 4.242640687119285,
+        "y": 0.0,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 2.513553390593274,
+        "y": -1.8064466094067262,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 1.414213562373095,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 3.0657894736842106,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "table",
+    "name": "桌子",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0.0,
+        "y": 1.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 3.82842712474619,
+        "y": 2.0,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 4.65685424949238,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 0.24264068711928477,
+        "y": 1.0,
+        "angle": 270,
+        "flipped": true
+      },
+      {
+        "id": "circle",
+        "x": 0.0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 4.65685424949238,
+        "y": 0.5,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 2.32842712474619,
+        "y": 0.0,
+        "angle": 180,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "rocket",
+    "name": "火箭",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 1.0,
+        "y": 0.0,
+        "angle": 90,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 0.0,
+        "y": 3.82842712474619,
+        "angle": 90,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 0.0,
+        "y": 4.65685424949238,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 2.0,
+        "y": 3.82842712474619,
+        "angle": 45,
+        "flipped": true
+      },
+      {
+        "id": "circle",
+        "x": 0.5,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 0.0,
+        "y": 4.742640687119285,
+        "angle": 90,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 1.0,
+        "y": 4.742640687119285,
+        "angle": 270,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "lamp",
+    "name": "路灯",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 1.0,
+        "y": 0.0,
+        "angle": 90,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 0.0,
+        "y": 4.65685424949238,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 0.0,
+        "y": 5.65685424949238,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 0.0,
+        "y": 4.65685424949238,
+        "angle": 225,
+        "flipped": true
+      },
+      {
+        "id": "semi-a",
+        "x": 0.5,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 1.5,
+        "y": 0.0,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 1.5,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "helicopter",
+    "name": "直升飞机",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "center",
+        "x": 2.82842712474619,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": true
+      },
+      {
+        "id": "large",
+        "x": 1.8284271247461898,
+        "y": -1.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 1.8284271247461898,
+        "y": -1.0,
+        "angle": 0,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 0.7071067811865475,
+        "y": -0.7071067811865475,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 1.8284271247461898,
+        "y": -0.5,
+        "angle": -90,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 1.3157894736842106,
+        "y": -1.0,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 5.0104076400856545,
+        "y": -1.3535533905932737,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "fish",
+    "name": "鳊鱼",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0.0,
+        "y": 0.0,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": -0.4142135623730949,
+        "y": 2.0,
+        "angle": 45,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 0.0,
+        "y": 4.0,
+        "angle": 135,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 0.5857864376269051,
+        "y": 2.0,
+        "angle": 45,
+        "flipped": true
+      },
+      {
+        "id": "circle",
+        "x": 2.05,
+        "y": 0.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 2.45,
+        "y": 1.25,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 2.45,
+        "y": 1.25,
+        "angle": 180,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "basket",
+    "name": "篮球架",
+    "source": "reference",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0.0,
+        "y": 2.82842712474619,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 1.0,
+        "y": 4.82842712474619,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 2.0,
+        "y": 2.0,
+        "angle": 45,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 2.0,
+        "y": 2.0,
+        "angle": 90,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 0.5,
+        "y": 2.82842712474619,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": -0.631578947368421,
+        "y": 1.3157894736842106,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": -0.631578947368421,
+        "y": 1.894736842105263,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  }
+]

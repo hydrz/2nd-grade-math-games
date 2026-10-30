@@ -1,0 +1,618 @@
+[
+  {
+    "id": "original-1",
+    "name": "弧线小站",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 2.7426406623730952,
+        "y": 1.5,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 2.4497474623730953,
+        "y": 2.5,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 0.20710676881345258,
+        "y": 1.7071067811865475,
+        "angle": 135,
+        "flipped": true
+      },
+      {
+        "id": "semi-a",
+        "x": 2.5355339,
+        "y": 1.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": -0.1464466094067262,
+        "y": 1.3535533905932737,
+        "angle": 45,
+        "flipped": true
+      }
+    ]
+  },
+  {
+    "id": "original-2",
+    "name": "折角城堡",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 3.0355338811865473,
+        "y": -0.20710678118654757,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 2.8284271247461903,
+        "y": 1.0,
+        "angle": 0,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 3.3284270811865477,
+        "y": 1.4999999811865474,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 3.181980490593274,
+        "y": 1.3535533905932737,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 3.5355339,
+        "y": 0.29289319999999996,
+        "angle": 225,
+        "flipped": true
+      }
+    ]
+  },
+  {
+    "id": "original-3",
+    "name": "三角山谷",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 1.8284271,
+        "y": 1.0,
+        "angle": 315,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": -0.41421356237309503,
+        "y": 2.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 2.8284271,
+        "y": 1.4142136,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "semi-a",
+        "x": 3.474873709406726,
+        "y": 1.0606602094067263,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 3.8284271,
+        "y": 1.4142136,
+        "angle": 0,
+        "flipped": true
+      }
+    ]
+  },
+  {
+    "id": "original-4",
+    "name": "奇妙桥梁",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": -2.474619043013604e-08,
+        "y": 3.4638242249419736e-16,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 2.8284271,
+        "y": 0.9999999999999999,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 3.3284271,
+        "y": -0.9142135623730951,
+        "angle": 90,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 3.3284271,
+        "y": -0.41421359999999996,
+        "angle": 270,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 0.35355340940672625,
+        "y": -1.0606601905932738,
+        "angle": 45,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "original-5",
+    "name": "小小探测器",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 2.1213203188134524,
+        "y": 0.7071067811865476,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 5.156854181186548,
+        "y": 0.9142135811865475,
+        "angle": 135,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 6.278174562373095,
+        "y": 1.2071068,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 5.363961,
+        "y": 0.20710680000000006,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 4.4497474,
+        "y": 0.7071068,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "original-6",
+    "name": "圆顶营地",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 2.8284271,
+        "y": 1.4142135623730951,
+        "angle": 90,
+        "flipped": true
+      },
+      {
+        "id": "triangle",
+        "x": 3.5355338811865473,
+        "y": 0.7071068188134525,
+        "angle": 135,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": -0.91421357474619,
+        "y": 2.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "semi-a",
+        "x": -0.5606601905932738,
+        "y": 1.6464465905932737,
+        "angle": 135,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 3.1819804905932734,
+        "y": 1.0606602094067261,
+        "angle": 315,
+        "flipped": true
+      }
+    ]
+  },
+  {
+    "id": "original-7",
+    "name": "欢乐码头",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 2.5355338811865478,
+        "y": 0.2928932188134524,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": 0.41421357525380964,
+        "y": 1.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 3.7626905147192247e-08,
+        "y": 2.0,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": -0.3535533905932738,
+        "y": 1.6464466094067263,
+        "angle": 45,
+        "flipped": true
+      },
+      {
+        "id": "semi-b",
+        "x": 2.8890873094067264,
+        "y": 1.353553390593274,
+        "angle": 315,
+        "flipped": true
+      }
+    ]
+  },
+  {
+    "id": "original-8",
+    "name": "智慧风车",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 2.8284271,
+        "y": 0.9999999999999999,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": -2.474618998604683e-08,
+        "y": 2.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": -0.7071067623730951,
+        "y": 1.2928932,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 0.5,
+        "y": 2.0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 1.91421355,
+        "y": 2.0,
+        "angle": 0,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "original-9",
+    "name": "拼板飞船",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 2.3284271,
+        "y": 0.5,
+        "angle": 315,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 3.742640662373095,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 3.0355339,
+        "y": 1.2071068,
+        "angle": 0,
+        "flipped": true
+      },
+      {
+        "id": "semi-a",
+        "x": 3.0355339,
+        "y": 0.5,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 2.6819804905932734,
+        "y": 1.5606602094067261,
+        "angle": 315,
+        "flipped": false
+      }
+    ]
+  },
+  {
+    "id": "original-10",
+    "name": "山间帐篷",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "trapezoid",
+        "x": 2.5355338811865478,
+        "y": 0.2928932188134524,
+        "angle": 45,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 3.2426406811865474,
+        "y": 0.9999999811865474,
+        "angle": 135,
+        "flipped": true
+      },
+      {
+        "id": "center",
+        "x": 2.8284271,
+        "y": 0.0,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "semi-a",
+        "x": 0.35355339059327373,
+        "y": -0.3535533905932738,
+        "angle": 135,
+        "flipped": true
+      },
+      {
+        "id": "semi-b",
+        "x": 3.7426407,
+        "y": 0.29289319999999996,
+        "angle": 180,
+        "flipped": true
+      }
+    ]
+  },
+  {
+    "id": "original-11",
+    "name": "创意工坊",
+    "source": "original",
+    "placements": [
+      {
+        "id": "large",
+        "x": 0,
+        "y": 0,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "circle",
+        "x": 0,
+        "y": 0.5,
+        "angle": 0,
+        "flipped": false
+      },
+      {
+        "id": "triangle",
+        "x": 2.8284271,
+        "y": 0.9999999999999999,
+        "angle": 90,
+        "flipped": true
+      },
+      {
+        "id": "trapezoid",
+        "x": 1.41421355,
+        "y": 0.0,
+        "angle": 180,
+        "flipped": false
+      },
+      {
+        "id": "center",
+        "x": -0.41421356237309503,
+        "y": 2.0,
+        "angle": 180,
+        "flipped": true
+      },
+      {
+        "id": "semi-a",
+        "x": 2.060660109406726,
+        "y": 1.6464466094067263,
+        "angle": 225,
+        "flipped": false
+      },
+      {
+        "id": "semi-b",
+        "x": 1.4142136,
+        "y": -0.5,
+        "angle": 270,
+        "flipped": false
+      }
+    ]
+  }
+]
