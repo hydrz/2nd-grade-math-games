@@ -1,37 +1,37 @@
-# React + TypeScript + Vite Template
+# React + TypeScript + Vite 模板
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+这个模板提供了一个最小化配置，用于在Vite中运行React，包含热重载(HMR)，并使用 oxlint 与 oxfmt 做代码检查和格式化。
 
-While this project uses Vue.js, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+Vite 支持许多流行的 JS 框架。[查看所有支持的框架](https://cn.vite.dev/guide/#scaffolding-your-first-vite-project 'https://vitejs.dev/guide/#scaffolding-your-first-vite-project')。
 
-[Vite Configuration Reference](https://vite.dev/config/)
+[Vite 配置参考](https://cn.vite.dev/config/)
 
-## Local Development
+## 本地开发
 
-### Project Setup
+### 项目依赖安装
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 开发环境编译与热重载
 
 ```sh
 npm run dev
-# Open http://localhost:5173 with your browser to see the result.
+# 在浏览器打开 http://localhost:5173
 ```
 
-### Compile and Minify for Production
+### 生产环境打包
 
 ```sh
 npm run build
-# The build artifacts will be stored in the `build/` directory.
+# 构建产物将存储在 build/ 目录中
 ```
 
-## Deploy Your Own
+## 部署
 
-Deploy your own Vite project with Edgeone pages.
+使用Edgeone pages部署你自己的Vite项目
 
-[![Deploy with EdgeOne Pages](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?template=vite-react)
+[![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://console.cloud.tencent.com/edgeone/pages/new?template=vite-react)
 
-More Templates: [EdgeOne Pages](https://edgeone.ai/pages/templates)
+更多模板: [从模板开始](https://console.cloud.tencent.com/edgeone/pages/create/template)

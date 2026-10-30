@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "react", "unicorn", "oxc"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2020": true
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "react/refs": "warn",
+    "react/purity": "warn",
+    "unicorn/no-array-sort": ["warn", { "allowAfterSpread": true }]
+  },
+  "ignorePatterns": ["dist", "test-results", "playwright-report"]
+}

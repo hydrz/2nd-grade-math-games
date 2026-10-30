@@ -16,7 +16,8 @@ export function parseRoute(pathname: string, search = ''): RouteState {
   const section = clean[0] || 'home'
   const searchParams = new URLSearchParams(search)
   const opParam = searchParams.get('op')
-  const op: MatchOperation = (opParam === 'remove' || opParam === 'add' || opParam === 'move') ? opParam : 'all'
+  const op: MatchOperation =
+    opParam === 'remove' || opParam === 'add' || opParam === 'move' ? opParam : 'all'
 
   if (section === 'draw' || section === 'assemble' || section === 'match') {
     const rawLevel = clean[1] ? parseInt(clean[1], 10) - 1 : undefined
@@ -39,7 +40,7 @@ export function parseRoute(pathname: string, search = ''): RouteState {
 
   if (section === 'growth') {
     const tabParam = clean[1] || searchParams.get('tab')
-    const tab: GrowthTab = (tabParam === 'mistakes' || tabParam === 'scores') ? tabParam : 'medals'
+    const tab: GrowthTab = tabParam === 'mistakes' || tabParam === 'scores' ? tabParam : 'medals'
     return {
       page: 'growth',
       levelIndex: undefined,
@@ -56,7 +57,12 @@ export function parseRoute(pathname: string, search = ''): RouteState {
   }
 }
 
-export function buildPath(page: Page, levelIndex?: number, tab?: GrowthTab, operation?: MatchOperation): string {
+export function buildPath(
+  page: Page,
+  levelIndex?: number,
+  tab?: GrowthTab,
+  operation?: MatchOperation,
+): string {
   if (page === 'home') return '/'
   if (page === 'contest') return '/contest'
   if (page === 'growth') {
