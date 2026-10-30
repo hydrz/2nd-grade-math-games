@@ -1281,3 +1281,260 @@ select {
     font-size: 68px;
   }
 }
+
+/* ===== 签名动效:奖励节拍 ===== */
+/* 反馈条以贴纸落定的方式入场;答对的星星逐颗弹出;顶栏星币钱包随入账跳动。 */
+.feedback {
+  animation: feedback-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+@keyframes feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.005);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.earned-stars .stars svg.lit {
+  transform-origin: center;
+  animation: star-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+.earned-stars .stars svg.lit:nth-child(2) {
+  animation-delay: 0.14s;
+}
+.earned-stars .stars svg.lit:nth-child(3) {
+  animation-delay: 0.28s;
+}
+@keyframes star-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-20deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.3) rotate(6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+.star-wallet.bump {
+  animation: wallet-bump 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes wallet-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.14) translateY(-2px);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== 画线苏醒:答对后七块板以拼板色浮现 ===== */
+.awaken-fill {
+  animation: piece-awaken 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+@keyframes piece-awaken {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== 火柴黑板:实体与幽灵之间的物理过渡 ===== */
+.match-wood {
+  transition:
+    opacity 0.2s ease,
+    stroke-width 0.15s ease;
+}
+
+/* ===== 出发票:邮戳先盖章落定,再继续漂浮 ===== */
+.ticket-postmark {
+  transform: rotate(11deg);
+  animation:
+    postmark-stamp 0.6s cubic-bezier(0.2, 1.2, 0.3, 1) backwards,
+    postmark-float 4.5s ease-in-out 0.7s infinite;
+}
+@keyframes postmark-stamp {
+  0% {
+    opacity: 0;
+    transform: rotate(26deg) scale(1.8);
+  }
+  62% {
+    opacity: 1;
+    transform: rotate(9deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(11deg) scale(1);
+  }
+}
+
+/* ===== 关卡选择器:航海航线 ===== */
+/* 虚线脊柱串起圆形站点:已解锁实线、锁定虚线空心、当前关金色。 */
+.level-list {
+  position: relative;
+}
+.level-list::before {
+  content: '';
+  position: absolute;
+  top: 22px;
+  bottom: 22px;
+  left: 20px;
+  border-left: 2px dashed #a8c3c9;
+}
+.level-number {
+  position: relative;
+  z-index: 1;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 2px solid var(--sea);
+  color: var(--sea);
+}
+.level-item:disabled .level-number {
+  border-style: dashed;
+  border-color: #a8c3c9;
+  background: transparent;
+  color: #8aa3ab;
+}
+.level-item small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  margin-bottom: 3px;
+}
+.level-item.active small {
+  color: #cfe6e8;
+}
+@media (max-width: 900px) {
+  .level-list::before {
+    top: 22px;
+    bottom: auto;
+    left: 24px;
+    right: 26px;
+    height: 0;
+    border-left: 0;
+    border-top: 2px dashed #a8c3c9;
+  }
+}
+
+/* ===== 竞赛选项卡:CTA 落底 ===== */
+.exam-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.exam-option > span:last-child {
+  margin-top: auto;
+  padding-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.exam-option > span:last-child svg {
+  transition: transform 0.18s ease;
+}
+.exam-option:hover > span:last-child svg {
+  transform: translateX(3px);
+}
+
+/* ===== 竞赛 feature 卡:规则栏与文案之间用虚线立界 ===== */
+.exam-rules {
+  padding-left: 26px;
+  border-left: 2px dashed rgba(255, 255, 255, 0.35);
+}
+
+/* ===== 奖状缩略预览:打印版式上墙 ===== */
+.certificate-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-left: auto;
+}
+.certificate-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 172px;
+  padding: 16px 20px 13px;
+  background: var(--paper);
+  border: 2.5px solid var(--sea);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  color: var(--sea);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.certificate-mini:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 0 var(--sea),
+    0 14px 24px -8px rgba(22, 49, 79, 0.2);
+}
+.certificate-mini:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--sea);
+}
+.certificate-mini svg {
+  color: #d98a00;
+}
+.certificate-mini strong {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.certificate-mini .mini-name {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--sea);
+}
+.certificate-mini .mini-score {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.15;
+  color: var(--coral);
+}
+.certificate-mini .mini-score small {
+  font-size: 13px;
+}
+.certificate-mini .mini-print {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  padding-top: 7px;
+  border-top: 1.5px dashed #d9c08a;
+  font-size: 11px;
+  font-weight: 800;
+  color: #6b4b00;
+}
+
+/* ===== 拼板键盘可达:聚焦描葡萄紫边 ===== */
+.movable-piece:focus {
+  outline: none;
+}
+.movable-piece:focus-visible {
+  stroke: var(--grape);
+  stroke-width: 0.06;
+}

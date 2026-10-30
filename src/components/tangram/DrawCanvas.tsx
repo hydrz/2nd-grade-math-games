@@ -38,6 +38,7 @@ export function DrawCanvas({
   onChange,
   reveal,
   hint,
+  success = false,
   compact = false,
   disabled = false,
   view,
@@ -49,6 +50,7 @@ export function DrawCanvas({
   onChange: (s: Stroke[]) => void;
   reveal: boolean;
   hint: boolean;
+  success?: boolean;
   compact?: boolean;
   disabled?: boolean;
   view?: { width: number; height: number };
@@ -449,6 +451,22 @@ export function DrawCanvas({
             fillOpacity={reveal ? 0.72 : 1}
             stroke="#42645a"
             strokeWidth=".018"
+          />
+        ))}
+        {(success && !reveal
+          ? puzzle.placements.map((p, i) => ({ p, delay: i * 70 }))
+          : []
+        ).map(({ p, delay }) => (
+          <path
+            key={`awaken-${p.id}`}
+            className="awaken-fill"
+            style={{ animationDelay: `${delay}ms` }}
+            d={pathOf([polygon(placedRing(p))])}
+            fill={piece(p.id).color}
+            fillOpacity=".28"
+            stroke="#557c6c"
+            strokeWidth=".02"
+            pointerEvents="none"
           />
         ))}
         {bad && (

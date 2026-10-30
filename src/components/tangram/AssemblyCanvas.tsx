@@ -275,6 +275,32 @@ export function AssemblyCanvas({
             strokeWidth={p.id === selected ? '.04' : '.024'}
             strokeLinejoin="round"
             className={disabled ? '' : 'movable-piece'}
+            tabIndex={disabled ? -1 : 0}
+            role="button"
+            aria-label={`${piece(p.id).name}拼板${p.id === selected ? '，已选中' : ''}`}
+            aria-pressed={p.id === selected}
+            onFocus={() => setSelected(p.id)}
+            onKeyDown={(e) => {
+              const steps: Record<string, number[]> = {
+                ArrowLeft: [-0.25, 0],
+                ArrowRight: [0.25, 0],
+                ArrowUp: [0, -0.25],
+                ArrowDown: [0, 0.25],
+              };
+              const delta = steps[e.key];
+              if (!delta || disabled) return;
+              e.preventDefault();
+              const raw = { ...p, x: p.x + delta[0], y: p.y + delta[1] };
+              const svg = e.currentTarget.ownerSVGElement!;
+              const snapped = snapFor(raw, placements, screenScale(svg));
+              const aligned =
+                raw.x !== snapped.x ||
+                raw.y !== snapped.y ||
+                raw.angle !== snapped.angle ||
+                raw.flipped !== snapped.flipped;
+              commit(placements.map((v) => (v.id === p.id ? snapped : v)));
+              playSound(aligned ? 'snap' : 'drop');
+            }}
             onPointerDown={(e) => {
               if (disabled) return;
               e.preventDefault();

@@ -136,6 +136,7 @@ export function GamePanel({
                 onChange={(strokes) => update({ ...draft, strokes: [strokes] })}
                 reveal={showAnswer}
                 hint={showHint}
+                success={allGood}
                 bad={feedback?.[0]?.regions ?? null}
                 badStroke={feedback?.[0]?.strokeIndex}
               />

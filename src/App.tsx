@@ -40,7 +40,7 @@ import { EmptyState } from './components/ui/EmptyState';
 import { GamePanel } from './components/GamePanel';
 import { checkGame, kindIcon, kindLabel } from './core/games';
 import { TANGRAMS } from './tangram/tangrams';
-import { MATCHES, operationLabel } from './match/matches';
+import { MATCHES, operationLabel, parseEquation } from './match/matches';
 import {
   STORAGE_KEY,
   downloadText,
@@ -105,6 +105,19 @@ const stopName = (kind: 'draw' | 'match', index: number) =>
   kind === 'draw'
     ? TANGRAMS[index].name
     : `${operationLabel[MATCHES[index].operation]}${MATCHES[index].count}根火柴`;
+// 火柴关的算式标识:初始摆法必然能解码,解码失败(空串)时不显示。
+const equationLabel = (index: number) => {
+  const puzzle = MATCHES[index];
+  if (!puzzle) return '';
+  const text = parseEquation(puzzle.initial).text;
+  return text.includes('完整') ? '' : text.replace(/ /g, '');
+};
+const mistakeLabel = (m: { kind: string; puzzleId: string }) => {
+  const n = Number(m.puzzleId.split(':')[1]);
+  if (m.kind === 'draw') return TANGRAMS[n]?.name ?? '';
+  if (m.kind === 'match') return equationLabel(n);
+  return '';
+};
 
 export function AppContent() {
   const location = useLocation();
@@ -203,6 +216,18 @@ export function AppContent() {
       : matchComplete || matchFrontier <= drawFrontier
         ? { kind: 'draw', index: drawFrontier }
         : { kind: 'match', index: matchFrontier };
+
+  // 星星入账时让钱包跳一下,把奖励时刻连到顶栏的持久身份上。
+  const prevStars = useRef(totalStars);
+  const [walletBump, setWalletBump] = useState(false);
+  useEffect(() => {
+    const prev = prevStars.current;
+    prevStars.current = totalStars;
+    if (totalStars <= prev) return;
+    setWalletBump(true);
+    const timer = window.setTimeout(() => setWalletBump(false), 700);
+    return () => window.clearTimeout(timer);
+  }, [totalStars]);
 
   const practiceKind = page === 'draw' || page === 'match' ? page : null;
   const level = practiceKind
@@ -552,7 +577,9 @@ export function AppContent() {
                 <CloudCheck size={16} />
                 {saveLabel}
               </span>
-              <span className="star-wallet">
+              <span
+                className={walletBump ? 'star-wallet bump' : 'star-wallet'}
+              >
                 <Star size={17} fill="currentColor" />
                 {totalStars}
                 <small>颗星</small>
@@ -786,6 +813,9 @@ export function AppContent() {
                                 ? TANGRAMS[i].name
                                 : `${operationLabel[MATCHES[i].operation]}${MATCHES[i].count}根火柴`}
                             </strong>
+                            {practiceKind === 'match' && (
+                              <small>{equationLabel(i)}</small>
+                            )}
                             <Stars value={stars} size={12} />
                           </span>
                           {level === i && <ChevronRight size={15} />}
@@ -1121,30 +1151,37 @@ export function AppContent() {
                       <p>综合竞赛达到80分，就能获得一张写着你名字的奖状。</p>
                     </div>
                     {data.certificates.length ? (
-                      data.certificates.map((id) => {
-                        const score = data.scores.find((s) => s.id === id);
-                        return (
-                          score && (
-                            <button
-                              className="certificate-button"
-                              key={id}
-                              onClick={() => printCertificate(id)}
-                            >
-                              <Award size={25} />
-                              <span>
-                                思维小勇士 · {score.score}分
-                                <small>
+                      <div className="certificate-list">
+                        {data.certificates.map((id) => {
+                          const score = data.scores.find((s) => s.id === id);
+                          return (
+                            score && (
+                              <button
+                                className="certificate-mini"
+                                key={id}
+                                onClick={() => printCertificate(id)}
+                              >
+                                <Award size={26} strokeWidth={1.8} />
+                                <strong>荣誉奖状</strong>
+                                <span className="mini-name">
+                                  {data.nickname}
+                                </span>
+                                <span className="mini-score">
+                                  {score.score}
+                                  <small>分</small>
+                                </span>
+                                <span className="mini-print">
+                                  <ArrowDownToLine size={13} />
+                                  打印奖状 ·{' '}
                                   {new Date(score.date).toLocaleDateString(
                                     'zh-CN',
                                   )}
-                                </small>
-                              </span>
-                              <ArrowDownToLine size={18} />
-                              打印奖状
-                            </button>
-                          )
-                        );
-                      })
+                                </span>
+                              </button>
+                            )
+                          );
+                        })}
+                      </div>
                     ) : (
                       <span className="empty-certificate">
                         第一张奖状，等你来点亮
@@ -1174,6 +1211,7 @@ export function AppContent() {
                           <h3>
                             {kindLabel[m.kind]} · 第
                             {Number(m.puzzleId.split(':')[1]) + 1}关
+                            {mistakeLabel(m) && ` · ${mistakeLabel(m)}`}
                             <span className="small-tag">
                               {m.streak >= 2
                                 ? '已掌握'
