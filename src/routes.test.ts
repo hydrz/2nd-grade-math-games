@@ -43,7 +43,7 @@ describe('routes', () => {
       operation: 'all',
     })
     expect(parseRoute('/assemble/5')).toEqual({
-      page: 'assemble',
+      page: 'draw',
       levelIndex: 4,
       growthTab: 'medals',
       operation: 'all',
@@ -108,7 +108,6 @@ describe('routes', () => {
     expect(buildPath('growth', undefined, 'scores')).toBe('/growth/scores')
     expect(buildPath('growth', undefined, 'mistakes')).toBe('/growth/mistakes')
     expect(buildPath('draw', 0)).toBe('/draw/1')
-    expect(buildPath('assemble', 5)).toBe('/assemble/6')
     expect(buildPath('match', 2, undefined, 'add')).toBe('/match/3?op=add')
     expect(buildPath('match', 2, undefined, 'all')).toBe('/match/3')
   })

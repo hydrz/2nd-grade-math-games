@@ -82,7 +82,7 @@ export interface Score {
   date: number
 }
 export interface SaveData {
-  version: 1
+  version: 2
   nickname: string
   stars: Record<string, number>
   drafts: Record<string, Draft>

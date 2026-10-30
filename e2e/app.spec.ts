@@ -60,7 +60,7 @@ async function gesture(
     await page.mouse.up()
   }
 }
-test('first visit and all six navigation entries render without browser errors', async ({
+test('first visit and all five navigation entries render without browser errors', async ({
   page,
 }) => {
   const errors: string[] = []
@@ -68,8 +68,7 @@ test('first visit and all six navigation entries render without browser errors',
   await page.goto('/')
   await expect(page.getByRole('heading', { name: /出发吧/ })).toBeVisible()
   for (const name of [
-    '七巧板 · 画线',
-    '七巧板 · 组装',
+    '七巧板 · 分解',
     '火柴棒挑战',
     '模拟竞赛',
     '成长与荣誉',
@@ -78,6 +77,38 @@ test('first visit and all six navigation entries render without browser errors',
     await page.getByRole('button', { name, exact: true }).click()
   expect(errors).toEqual([])
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})
+test('sound toggle persists and game taps reach the audio engine', async ({ page }) => {
+  await page.addInitScript(() => {
+    const scope = window as Window & { soundStarts?: number }
+    scope.soundStarts = 0
+    const create = AudioContext.prototype.createOscillator
+    AudioContext.prototype.createOscillator = function () {
+      const oscillator = create.call(this)
+      const start = oscillator.start.bind(oscillator)
+      oscillator.start = (when = 0) => {
+        scope.soundStarts = (scope.soundStarts ?? 0) + 1
+        start(when)
+      }
+      return oscillator
+    }
+  })
+  await page.goto('/')
+  await expect(page.getByRole('button', { name: '关闭音效', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: '关闭音效', exact: true }).click()
+  await expect(page.getByRole('button', { name: '开启音效', exact: true })).toBeVisible()
+  expect((await saved(page)).settings.sound).toBe(false)
+  await page.getByRole('button', { name: '开启音效', exact: true }).click()
+  await expect(page.getByRole('button', { name: '关闭音效', exact: true })).toBeVisible()
+  expect((await saved(page)).settings.sound).toBe(true)
+  await page.getByRole('button', { name: '火柴棒挑战', exact: true }).click()
+  await page.evaluate(() => {
+    ;(window as Window & { soundStarts?: number }).soundStarts = 0
+  })
+  await page.locator('[data-cell="6"][data-bit="6"]').click()
+  await expect
+    .poll(() => page.evaluate(() => (window as Window & { soundStarts?: number }).soundStarts ?? 0))
+    .toBeGreaterThan(0)
 })
 test('reference matchstick solution earns progress, restores it, and only counts one review', async ({
   page,
@@ -134,11 +165,9 @@ test('adding and moving matches support taps and accept actual legal solutions',
   await page.getByRole('button', { name: '检查答案', exact: true }).click()
   await expect(page.getByRole('status')).toContainText('完成')
 })
-test('drawing captures genuine pointer gestures, undo, redo and zoom', async ({
-  page,
-}, info) => {
+test('drawing captures genuine pointer gestures, undo, redo and zoom', async ({ page }, info) => {
   await page.goto('/')
-  await page.getByRole('button', { name: '七巧板 · 画线', exact: true }).click()
+  await page.getByRole('button', { name: '七巧板 · 分解', exact: true }).click()
   await page.evaluate(() => document.fonts.ready)
   const drawing = page.locator('.drawing-svg').first()
   await drawing.scrollIntoViewIfNeeded()
@@ -158,16 +187,14 @@ test('drawing captures genuine pointer gestures, undo, redo and zoom', async ({
   await expect(page.getByRole('dialog')).toBeVisible()
   await page.getByRole('button', { name: '关闭放大', exact: true }).click()
   await page.reload()
-  await page.getByRole('button', { name: '七巧板 · 画线', exact: true }).click()
+  await page.getByRole('button', { name: '七巧板 · 分解', exact: true }).click()
   expect((await saved(page)).drafts['draw:0'].strokes![0]).toHaveLength(1)
 })
-test('arc tool draws the same semicircle from either end', async ({
-  page,
-}, info) => {
+test('arc tool draws the same semicircle from either end', async ({ page }, info) => {
   const errors: string[] = []
   page.on('pageerror', (e) => errors.push(e.message))
   await page.goto('/')
-  await page.getByRole('button', { name: '七巧板 · 画线', exact: true }).click()
+  await page.getByRole('button', { name: '七巧板 · 分解', exact: true }).click()
   await page.evaluate(() => document.fonts.ready)
   const board = page.locator('.draw-board').first(),
     svg = page.locator('.drawing-svg').first()
@@ -208,7 +235,7 @@ test('tapping two anchors draws a line and an arc in the single-figure studio', 
   page,
 }, info) => {
   await page.goto('/')
-  await page.getByRole('button', { name: '七巧板 · 画线', exact: true }).click()
+  await page.getByRole('button', { name: '七巧板 · 分解', exact: true }).click()
   await page.evaluate(() => document.fonts.ready)
   const board = page.locator('.draw-board').first(),
     svg = page.locator('.drawing-svg').first()
@@ -269,11 +296,11 @@ test('tapping two anchors draws a line and an arc in the single-figure studio', 
   await expect(page.locator('.individual-feedback').first()).toBeVisible()
 })
 
-test('assembly supports pointer movement, rotation, reflection and undo', async ({
+test('the draw studio supports piece movement, rotation, reflection and undo', async ({
   page,
 }, info) => {
   await page.goto('/')
-  await page.getByRole('button', { name: '七巧板 · 组装', exact: true }).click()
+  await page.getByRole('button', { name: '七巧板 · 分解', exact: true }).click()
   const target = page.locator('path.movable-piece').filter({ hasText: '曲形大板' })
   await target.scrollIntoViewIfNeeded()
   const box = (await target.boundingBox())!
@@ -283,28 +310,30 @@ test('assembly supports pointer movement, rotation, reflection and undo', async 
     { x: box.x + box.width * 0.7 - 25, y: box.y + box.height * 0.5 - 35 },
     info.project.name === 'tablet',
   )
-  const before = (await saved(page)).drafts['assemble:0'].placements!.find((p) => p.id === 'large')!
+  const before = (await saved(page)).drafts['draw:0'].placements!.find((p) => p.id === 'large')!
   await page.getByRole('button', { name: '顺时针旋转45度', exact: true }).click()
   expect(
-    (await saved(page)).drafts['assemble:0'].placements!.find((p) => p.id === 'large')!.angle,
+    (await saved(page)).drafts['draw:0'].placements!.find((p) => p.id === 'large')!.angle,
   ).toBe(before.angle + 45)
   await page.getByRole('button', { name: '翻面', exact: true }).click()
   expect(
-    (await saved(page)).drafts['assemble:0'].placements!.find((p) => p.id === 'large')!.flipped,
+    (await saved(page)).drafts['draw:0'].placements!.find((p) => p.id === 'large')!.flipped,
   ).toBe(true)
   await page.getByRole('button', { name: '撤销组装', exact: true }).click()
   expect(
-    (await saved(page)).drafts['assemble:0'].placements!.find((p) => p.id === 'large')!.flipped,
+    (await saved(page)).drafts['draw:0'].placements!.find((p) => p.id === 'large')!.flipped,
   ).toBe(false)
 })
-test('assembly snaps loosely dragged pieces onto their answer slots', async ({ page }, info) => {
+test('assembly snaps loosely dragged pieces onto their answer slots and verifies', async ({
+  page,
+}, info) => {
   const source = reference[0],
     origin = bounds(silhouette(source.placements))
   const slots = source.placements.map((p) => ({ ...p, x: p.x - origin.x, y: p.y - origin.y }))
   const b = bounds(silhouette(slots)),
     view = { x: b.x - 3.3, y: b.y - 2.3, w: b.width + 6.6, h: b.height + 5.5 }
   const data = freshSave()
-  data.drafts['assemble:0'] = {
+  data.drafts['draw:0'] = {
     errors: 0,
     hints: 0,
     revealed: false,
@@ -312,11 +341,12 @@ test('assembly snaps loosely dragged pieces onto their answer slots', async ({ p
   }
   await seed(page, data)
   await page.goto('/')
-  await page.getByRole('button', { name: '七巧板 · 组装', exact: true }).click()
+  await page.getByRole('button', { name: '七巧板 · 分解', exact: true }).click()
+  const svg = page.locator('.assembly-svg')
+  await svg.scrollIntoViewIfNeeded()
   for (const slot of slots) {
     await page.getByRole('button', { name: piece(slot.id).name, exact: true }).click()
-    await page.locator('.assembly-svg').scrollIntoViewIfNeeded()
-    const box = (await page.locator('.assembly-svg').boundingBox())!
+    const box = (await svg.boundingBox())!
     const scale = Math.min(box.width / view.w, box.height / view.h)
     const screen = (p: Point) => ({
       x: box.x + (box.width - view.w * scale) / 2 + (p[0] - view.x) * scale,
@@ -330,7 +360,7 @@ test('assembly snaps loosely dragged pieces onto their answer slots', async ({ p
       { x: landing.x + 11, y: landing.y + 9 },
       info.project.name === 'tablet',
     )
-    const placed = (await saved(page)).drafts['assemble:0'].placements!.find(
+    const placed = (await saved(page)).drafts['draw:0'].placements!.find(
       (p) => p.id === slot.id,
     )!
     expect(placed.x).toBeCloseTo(slot.x, 6)
@@ -338,7 +368,7 @@ test('assembly snaps loosely dragged pieces onto their answer slots', async ({ p
     expect(placed.angle).toBe(slot.angle)
     expect(placed.flipped).toBe(slot.flipped)
   }
-  await page.getByRole('button', { name: '检查答案', exact: true }).click()
+  await page.getByRole('button', { name: '检查拼法', exact: true }).click()
   await expect(page.getByRole('status')).toContainText('严丝合缝')
 })
 test('competition survives navigation and expires once using the absolute deadline', async ({
@@ -386,20 +416,24 @@ test('nickname and validated import/export preserve the local archive', async ({
   expect((await saved(page)).stars['draw:0']).toBe(3)
 })
 test('page reload preserves active route, game level, filter, and growth tab', async ({ page }) => {
-  await page.goto('/#/assemble/1')
+  await page.goto('/#/draw/1')
   await expect(page.getByText('第 01 关')).toBeVisible()
   await page.reload()
   await expect(page.getByText('第 01 关')).toBeVisible()
-  expect(page.url()).toContain('#/assemble/1')
+  expect(page.url()).toContain('#/draw/1')
 
   const data = freshSave()
-  data.stars['assemble:0'] = 3
+  data.stars['draw:0'] = 3
   await seed(page, data)
-  await page.goto('/#/assemble/2')
+  await page.goto('/#/draw/2')
   await expect(page.getByText('第 02 关')).toBeVisible()
   await page.reload()
   await expect(page.getByText('第 02 关')).toBeVisible()
-  expect(page.url()).toContain('#/assemble/2')
+  expect(page.url()).toContain('#/draw/2')
+
+  await page.goto('/#/assemble/3')
+  await expect(page.getByText('第 03 关')).toBeVisible()
+  expect(page.url()).toContain('#/assemble/3')
 
   await page.goto('/#/match/1?op=remove')
   await expect(page.getByLabel('筛选火柴题型')).toHaveValue('remove')

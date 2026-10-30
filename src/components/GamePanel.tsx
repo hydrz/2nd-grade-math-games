@@ -9,13 +9,16 @@ import {
   Star,
   ChevronRight,
   Shapes,
+  ShieldCheck,
 } from 'lucide-react'
 import { MATCHES } from '../matches'
 import { TANGRAMS } from '../tangrams'
 import { emptyDraft } from '../storage'
+import { checkAssembly } from '../geometry'
 import { AssemblyCanvas, DrawCanvas } from './PuzzleCanvas'
 import { checkGame, scatter } from '../games'
 import { MatchCanvas } from './MatchCanvas'
+import { playSound } from '../sound'
 import type { CheckResult, Draft, GameKind } from '../types'
 
 export function GamePanel({
@@ -38,8 +41,10 @@ export function GamePanel({
   const [feedback, setFeedback] = useState<CheckResult[] | null>(null),
     [submitted, setSubmitted] = useState(false),
     [showHint, setShowHint] = useState(false),
-    [showAnswer, setShowAnswer] = useState(false)
-  const puzzle = TANGRAMS[index], allGood = submitted && !!feedback && feedback.every((r) => r.ok)
+    [showAnswer, setShowAnswer] = useState(false),
+    [assembleCheck, setAssembleCheck] = useState<CheckResult | null>(null)
+  const puzzle = TANGRAMS[index],
+    allGood = submitted && !!feedback && feedback.every((r) => r.ok)
   function update(next: Draft) {
     setSubmitted(false)
     setFeedback(null)
@@ -50,6 +55,10 @@ export function GamePanel({
     setFeedback(results)
     setSubmitted(true)
     onResult(results, draft)
+    if (results.every((r) => r.ok)) {
+      playSound('success')
+      if (!draft.revealed) window.setTimeout(() => playSound('star'), 380)
+    } else playSound('retry')
   }
   return (
     <div className="game-panel">
@@ -61,7 +70,9 @@ export function GamePanel({
             </span>
             <div>
               <strong>先拼一拼，再画出七块的分割线</strong>
-              <p>左边可以自由拼组七块板，右边照着轮廓画出每块板的分界线。也可以有不同的正确分法。</p>
+              <p>
+                左边自由拼组七块板，点「检查拼法」确认分法；右边照着轮廓点两个圆点，画出每块板的分界线。
+              </p>
             </div>
           </div>
           <div className="draw-studio">
@@ -74,10 +85,33 @@ export function GamePanel({
               <AssemblyCanvas
                 puzzle={puzzle}
                 placements={draft.placements || scatter(puzzle)}
-                onChange={(placements) => update({ ...draft, placements })}
+                onChange={(placements) => {
+                  setAssembleCheck(null)
+                  update({ ...draft, placements })
+                }}
                 reveal={false}
                 hint={false}
+                bad={assembleCheck && !assembleCheck.ok ? (assembleCheck.regions ?? null) : null}
               />
+              <div className="assemble-verify">
+                <button
+                  className="secondary"
+                  onClick={() => {
+                    const result = checkAssembly(puzzle, draft.placements || scatter(puzzle))
+                    setAssembleCheck(result)
+                    playSound(result.ok ? 'success' : 'retry')
+                  }}
+                >
+                  <ShieldCheck size={17} />
+                  检查拼法
+                </button>
+                {assembleCheck && (
+                  <p className={`assemble-feedback ${assembleCheck.ok ? 'good' : ''}`} role="status">
+                    {assembleCheck.ok ? <Check size={14} /> : null}
+                    {assembleCheck.message}
+                  </p>
+                )}
+              </div>
             </section>
             <section className="studio-pane">
               <div className="pane-heading">
@@ -104,25 +138,6 @@ export function GamePanel({
           </div>
         </>
       )}
-      {kind === 'assemble' && (
-        <>
-          <div className="exercise-instruction">
-            <Shapes size={25} />
-            <div>
-              <strong>拼出「{puzzle.name}」</strong>
-              <p>七块全部用上，可以旋转、翻面，不能重叠。</p>
-            </div>
-            <span className="small-tag">45°旋转</span>
-          </div>
-          <AssemblyCanvas
-            puzzle={puzzle}
-            placements={draft.placements || scatter(puzzle)}
-            onChange={(p) => update({ ...draft, placements: p })}
-            reveal={showAnswer}
-            hint={showHint}
-          />
-        </>
-      )}
       {kind === 'match' && (
         <MatchCanvas
           puzzle={MATCHES[index]}
@@ -139,9 +154,10 @@ export function GamePanel({
           {kind === 'match' && (
             <button
               className="text-button"
-              onClick={() =>
+              onClick={() => {
+                playSound('hint')
                 update({ ...draft, matches: MATCHES[index].solutions[0], revealed: true })
-              }
+              }}
             >
               摆出参考解
             </button>
@@ -182,7 +198,13 @@ export function GamePanel({
             )}
           </div>
           {allGood && !draft.revealed && onNext && (
-            <button className="primary" onClick={onNext}>
+            <button
+              className="primary"
+              onClick={() => {
+                playSound('tap')
+                onNext()
+              }}
+            >
               下一关
               <ChevronRight size={17} />
             </button>
@@ -196,6 +218,7 @@ export function GamePanel({
               <button
                 className="secondary"
                 onClick={() => {
+                  playSound('hint')
                   setShowHint(true)
                   onDraft({ ...draft, hints: draft.hints + 1 })
                 }}
@@ -206,6 +229,7 @@ export function GamePanel({
               <button
                 className="text-button"
                 onClick={() => {
+                  playSound('hint')
                   setShowAnswer(true)
                   onDraft({ ...draft, revealed: true })
                 }}
@@ -218,6 +242,7 @@ export function GamePanel({
           <button
             className="text-button"
             onClick={() => {
+              playSound('erase')
               onDraft({
                 ...emptyDraft(),
                 errors: draft.errors,
@@ -236,6 +261,7 @@ export function GamePanel({
             <button
               className="secondary"
               onClick={() => {
+                playSound('tap')
                 onDraft(emptyDraft())
                 setFeedback(null)
                 setShowAnswer(false)

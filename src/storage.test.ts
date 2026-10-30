@@ -65,4 +65,14 @@ describe('versioned local progress', () => {
     expect(starsFor({ ...emptyDraft(), hints: 2 })).toBe(1)
     expect(starsFor({ ...emptyDraft(), revealed: true })).toBe(0)
   })
+  it('starts new saves with sound on and migrates the pre-sound archive', () => {
+    expect(freshSave().version).toBe(2)
+    expect(freshSave().settings.sound).toBe(true)
+    const legacy = { ...freshSave(), version: 1, settings: { sound: false } }
+    const migrated = parseSave(JSON.stringify(legacy))
+    expect(migrated.version).toBe(2)
+    expect(migrated.settings.sound).toBe(true)
+    const muted = { ...freshSave(), settings: { sound: false } }
+    expect(parseSave(JSON.stringify(muted)).settings.sound).toBe(false)
+  })
 })

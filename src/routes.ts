@@ -22,7 +22,8 @@ export function parseRoute(pathname: string, search = ''): RouteState {
   if (section === 'draw' || section === 'assemble' || section === 'match') {
     const rawLevel = clean[1] ? parseInt(clean[1], 10) - 1 : undefined
     return {
-      page: section as GameKind,
+      // Old /assemble deep links land in the draw studio, which embeds free assembly.
+      page: section === 'assemble' ? 'draw' : (section as GameKind),
       levelIndex: rawLevel !== undefined && !Number.isNaN(rawLevel) ? rawLevel : undefined,
       growthTab: 'medals',
       operation: op,
@@ -68,7 +69,7 @@ export function buildPath(
   if (page === 'growth') {
     return tab && tab !== 'medals' ? `/growth/${tab}` : '/growth'
   }
-  if (page === 'draw' || page === 'assemble' || page === 'match') {
+  if (page === 'draw' || page === 'match') {
     const levelPart = levelIndex !== undefined ? `/${levelIndex + 1}` : ''
     const search = page === 'match' && operation && operation !== 'all' ? `?op=${operation}` : ''
     return `/${page}${levelPart}${search}`

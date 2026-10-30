@@ -5,13 +5,13 @@ import Polygonizer from 'jsts/org/locationtech/jts/operation/polygonize/Polygoni
 import GeometryNoder from 'jsts/org/locationtech/jts/noding/snapround/GeometryNoder.js'
 import PrecisionModel from 'jsts/org/locationtech/jts/geom/PrecisionModel.js'
 import ArrayList from 'jsts/java/util/ArrayList.js'
-import type { CheckResult, PieceDefinition, Placement, Point, Stroke, TangramPuzzle } from './types'
 import { sorted } from './collections'
+const squaredDistance = (a: Point, b: Point) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2
+import type { CheckResult, PieceDefinition, Placement, Point, Stroke, TangramPuzzle } from './types'
 
 const SQ = Math.SQRT2
 export const round = (n: number) => Math.round(n * 1e7) / 1e7
 export const distance = (a: Point, b: Point) => Math.hypot(a[0] - b[0], a[1] - b[1])
-const squaredDistance = (a: Point, b: Point) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2
 const arc = (cx: number, cy: number, r: number, from: number, to: number, steps = 64): Point[] =>
   Array.from({ length: steps + 1 }, (_, i) => [
     round(cx + r * Math.cos(from + ((to - from) * i) / steps)),
@@ -239,7 +239,7 @@ function centroid(ring: Point[]): Point {
 function congruenceError(region: Polygon, def: PieceDefinition) {
   if (region.length !== 1) return Infinity
   const areaGap = Math.abs(area(region[0]) - area(def.ring))
-  if (areaGap > 0.06) return areaGap + 1
+  if (areaGap > 0.09) return areaGap + 1
   const center = centroid(region[0]),
     origin = centroid(def.ring)
   // Find orientation from long straight edges, also allowing non-grid valid answers.
@@ -273,8 +273,15 @@ function congruenceError(region: Polygon, def: PieceDefinition) {
     }
   return best
 }
+const perimeters = new Map<string, number>()
 function congruent(region: Polygon, def: PieceDefinition) {
-  return congruenceError(region, def) < 0.006
+  let perimeter = perimeters.get(def.id)
+  if (perimeter === undefined) {
+    perimeter = def.ring.reduce((sum, p, i) => (i ? sum + distance(p, def.ring[i - 1]) : 0), 0)
+    perimeters.set(def.id, perimeter)
+  }
+  // Hand-drawn lines land a few pixels off; allow a small share of the piece's outline.
+  return congruenceError(region, def) < Math.max(0.02, perimeter * 0.04)
 }
 function hasLooseEdge(collection: {
   iterator(): { hasNext(): boolean; next(): jsts.geom.Geometry }
@@ -340,8 +347,9 @@ export function checkDrawing(puzzle: TangramPuzzle, strokes: Stroke[]): CheckRes
       )
       const inside = clipping.intersection(coordinates, target)
       if (
-        multiArea(inside) > 0.0001 &&
-        Math.abs(multiArea(inside) - multiArea([coordinates])) < 0.001
+        // Ignore hairline slivers created by lines that just miss each other.
+        multiArea(inside) > 0.004 &&
+        Math.abs(multiArea(inside) - multiArea([coordinates])) < 0.002
       )
         faces.push(coordinates)
     }
@@ -368,7 +376,7 @@ export function checkDrawing(puzzle: TangramPuzzle, strokes: Stroke[]): CheckRes
         regions: bad.length ? bad : undefined,
       }
     }
-    if (multiArea(clipping.xor(target, clipping.union(faces[0], ...faces.slice(1)))) > 0.003)
+    if (multiArea(clipping.xor(target, clipping.union(faces[0], ...faces.slice(1)))) > 0.02)
       return { ok: false, message: '还有一部分没有正确分解。' }
     return { ok: true, message: '七块形状和大小全部正确，你找到了一种好分法！' }
   } catch {
@@ -465,7 +473,24 @@ export function snapPlacement(
       bestDelta = delta
     }
   }
-  return bestDelta && bestSupport ? { ...p, x: p.x + bestDelta[0], y: p.y + bestDelta[1] } : p
+  if (bestDelta && bestSupport) return { ...p, x: p.x + bestDelta[0], y: p.y + bestDelta[1] }
+  // No corner alignment: press one corner flush against a neighbouring edge instead.
+  let edgeDelta: Point | null = null,
+    edgeGap = Infinity
+  const rings = [...others.map((o) => placedRing(o)), ...boundary.flatMap((poly) => poly)]
+  for (const a of anchors) {
+    for (const ring of rings) {
+      for (let i = 1; i < ring.length; i++) {
+        const q = project(a, ring[i - 1], ring[i]), d = distance(a, q)
+        if (d < edgeGap) {
+          edgeGap = d
+          edgeDelta = [q[0] - a[0], q[1] - a[1]]
+        }
+      }
+    }
+  }
+  if (edgeDelta && edgeGap <= threshold) return { ...p, x: p.x + edgeDelta[0], y: p.y + edgeDelta[1] }
+  return p
 }
 export function project(p: Point, a: Point, b: Point): Point {
   const dx = b[0] - a[0],

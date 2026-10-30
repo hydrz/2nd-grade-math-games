@@ -34,6 +34,7 @@ import {
   vertexPoints,
 } from '../geometry'
 import { sorted } from '../collections'
+import { playSound } from '../sound'
 import type { Placement, Point, Stroke, TangramPuzzle } from '../types'
 
 export function MiniTangram({
@@ -267,12 +268,16 @@ export function DrawCanvas({
       const index = strokes.findIndex((s) =>
         strokePoints(s).some((v, i, arr) => i && distance(p, project(p, arr[i - 1], v)) < 0.18),
       )
-      if (index >= 0) commit(strokes.filter((_, i) => i !== index))
+      if (index >= 0) {
+        commit(strokes.filter((_, i) => i !== index))
+        playSound('erase')
+      }
       setPending(null)
       return
     }
     active.current = true
     setPreview({ kind: tool, a: p, b: p, side })
+    playSound('pen')
   }
   function connect(p: Point) {
     if (!pending) {
@@ -285,13 +290,15 @@ export function DrawCanvas({
         ? { kind: 'arc', a: pending, b: p, side: autoArcSide(pending, p) ?? side }
         : { kind: 'line', a: pending, b: p }
     commit([...strokes, stroke])
+    playSound('draw')
     setPending(null)
   }
   function up(e: React.PointerEvent<SVGSVGElement>) {
     if (!active.current || !preview) return
     active.current = false
     // A tap is decided by raw pointer travel, before any snapping or direction locking.
-    const raw = localPoint(e), rect = e.currentTarget.getBoundingClientRect()
+    const raw = localPoint(e),
+      rect = e.currentTarget.getBoundingClientRect()
     const scale = Math.min(rect.width / width, rect.height / height) || 1
     if (distance(preview.a, raw) * scale < 9) {
       setPreview(null)
@@ -302,6 +309,7 @@ export function DrawCanvas({
     if (next.kind === 'arc') next.side = autoArcSide(next.a, next.b) ?? next.side
     if (distance(next.a, next.b) > 0.08) {
       commit([...strokes, next])
+      playSound('draw')
       setPending(null)
     }
     setPreview(null)
@@ -365,6 +373,7 @@ export function DrawCanvas({
             setFuture((f) => [...f, strokes])
             setHistory((h) => h.slice(0, -1))
             onChange(last)
+            playSound('erase')
           }}
         >
           <Undo2 size={17} />
@@ -378,6 +387,7 @@ export function DrawCanvas({
             setHistory((h) => [...h, strokes])
             setFuture((f) => f.slice(0, -1))
             onChange(last)
+            playSound('draw')
           }}
         >
           <Redo2 size={17} />
@@ -387,7 +397,10 @@ export function DrawCanvas({
           aria-label="清空本图"
           title="清空本图"
           disabled={!strokes.length || disabled}
-          onClick={() => commit([])}
+          onClick={() => {
+            playSound('erase')
+            commit([])
+          }}
         >
           <RotateCcw size={17} />
         </button>
@@ -427,7 +440,7 @@ export function DrawCanvas({
       >
         <path
           d={pathOf(target)}
-          fill="#fffdf7"
+          fill="#fff"
           fillRule="evenodd"
           stroke="#344c47"
           strokeWidth=".026"
@@ -484,7 +497,7 @@ export function DrawCanvas({
               cx={pending[0]}
               cy={pending[1]}
               r=".09"
-              fill="#fffdf7"
+              fill="#fff"
               stroke="#e98c3d"
               strokeWidth=".028"
               pointerEvents="none"
@@ -538,7 +551,7 @@ export function DrawCanvas({
               cy={p[1]}
               r=".06"
               fill={endpoints[i][n] ? '#2e7d6a' : '#e98c3d'}
-              stroke="#fffdf7"
+              stroke="#fff"
               strokeWidth=".014"
               pointerEvents="none"
             />
@@ -587,9 +600,7 @@ export function DrawCanvas({
               </button>
             </div>
             {content}
-            <p className="canvas-note">
-              点两个圆点即可连线；直线自动对齐 45° 角。
-            </p>
+            <p className="canvas-note">点两个圆点即可连线；直线自动对齐 45° 角。</p>
           </div>
         </div>
       ) : (
@@ -605,6 +616,7 @@ export function AssemblyCanvas({
   reveal,
   hint,
   disabled = false,
+  bad = null,
 }: {
   puzzle: TangramPuzzle
   placements: Placement[]
@@ -612,6 +624,7 @@ export function AssemblyCanvas({
   reveal: boolean
   hint: boolean
   disabled?: boolean
+  bad?: MultiPolygon | null
 }) {
   const [selected, setSelected] = useState<Placement['id']>('large'),
     [live, setLive] = useState<Placement[] | null>(null),
@@ -650,6 +663,7 @@ export function AssemblyCanvas({
     onChange(next)
   }
   function changeSelected(angle: number, flip = false) {
+    playSound('rotate')
     const p = placements.find((v) => v.id === selected)!,
       ring = placedRing(p),
       center: Point = [
@@ -730,6 +744,7 @@ export function AssemblyCanvas({
               setFuture((f) => [...f, placements])
               onChange(history[history.length - 1])
               setHistory((h) => h.slice(0, -1))
+              playSound('tap')
             }}
           >
             <Undo2 size={18} />
@@ -742,6 +757,7 @@ export function AssemblyCanvas({
               setHistory((h) => [...h, placements])
               onChange(future[future.length - 1])
               setFuture((f) => f.slice(0, -1))
+              playSound('tap')
             }}
           >
             <Redo2 size={18} />
@@ -768,8 +784,14 @@ export function AssemblyCanvas({
         onPointerUp={(e) => {
           if (!drag.current) return
           const raw = draggedTo(localPoint(e)),
-            snapped = snapFor(raw, current, screenScale(e.currentTarget))
+            snapped = snapFor(raw, current, screenScale(e.currentTarget)),
+            aligned =
+              raw.x !== snapped.x ||
+              raw.y !== snapped.y ||
+              raw.angle !== snapped.angle ||
+              raw.flipped !== snapped.flipped
           commit(current.map((v) => (v.id === raw.id ? snapped : v)))
+          playSound(aligned ? 'snap' : 'drop')
           drag.current = null
           setDraggingId(null)
           setLive(null)
@@ -786,7 +808,7 @@ export function AssemblyCanvas({
       >
         <path
           d={pathOf(target)}
-          fill="#edf0e6"
+          fill="#fff"
           fillRule="evenodd"
           stroke="#96a69b"
           strokeWidth=".022"
@@ -826,7 +848,7 @@ export function AssemblyCanvas({
               d={pathOf([polygon(placedRing(p))])}
               fill={piece(p.id).color}
               fillOpacity={draggingId === p.id ? 0.6 : 1}
-              stroke={p.id === selected ? '#344c47' : '#fffdf7'}
+              stroke={p.id === selected ? '#344c47' : '#fff'}
               strokeWidth={p.id === selected ? '.04' : '.024'}
               strokeLinejoin="round"
               className={disabled ? '' : 'movable-piece'}
@@ -834,6 +856,7 @@ export function AssemblyCanvas({
                 if (disabled) return
                 e.preventDefault()
                 setSelected(p.id)
+                playSound('pick')
                 const svg = e.currentTarget.ownerSVGElement!
                 svg.setPointerCapture(e.pointerId)
                 const point = svg.createSVGPoint()
@@ -850,13 +873,27 @@ export function AssemblyCanvas({
             </path>
           ),
         )}
+        {bad && (
+          <path
+            d={pathOf(bad)}
+            fill="#e4574b"
+            fillOpacity=".24"
+            stroke="#c0392b"
+            strokeWidth=".022"
+            strokeLinejoin="round"
+            pointerEvents="none"
+          />
+        )}
       </svg>
       <div className="piece-selector" aria-label="选择拼板">
         {PIECES.map((p) => (
           <button
             key={p.id}
             className={selected === p.id ? 'selected' : ''}
-            onClick={() => setSelected(p.id)}
+            onClick={() => {
+              playSound('pick')
+              setSelected(p.id)
+            }}
             style={{ '--piece-color': p.color } as React.CSSProperties}
           >
             {p.name}

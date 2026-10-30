@@ -1,10 +1,12 @@
 import type { CompetitionSession, Draft, GameKind, SaveData, Score, ExamType } from './types'
 // Level totals for validation; the catalogs themselves live in tangrams.ts / matches.ts.
-const DRAW_LEVELS = 24, ASSEMBLE_LEVELS = 24, MATCH_LEVELS = 60
+const DRAW_LEVELS = 24,
+  ASSEMBLE_LEVELS = 24,
+  MATCH_LEVELS = 60
 export const STORAGE_KEY = 'little-hero-math:v1'
 export const emptyDraft = (): Draft => ({ errors: 0, hints: 0, revealed: false })
 export const freshSave = (): SaveData => ({
-  version: 1,
+  version: 2,
   nickname: '小勇士',
   stars: {},
   drafts: {},
@@ -12,7 +14,7 @@ export const freshSave = (): SaveData => ({
   scores: [],
   competition: null,
   certificates: [],
-  settings: { sound: false },
+  settings: { sound: true },
 })
 const record = (v: unknown): v is Record<string, unknown> =>
   !!v && typeof v === 'object' && !Array.isArray(v)
@@ -84,7 +86,7 @@ export function parseSave(raw: string): SaveData {
   const value: unknown = JSON.parse(raw)
   if (
     !record(value) ||
-    value.version !== 1 ||
+    (value.version !== 1 && value.version !== 2) ||
     typeof value.nickname !== 'string' ||
     value.nickname.length > 20 ||
     !record(value.stars) ||
@@ -145,7 +147,12 @@ export function parseSave(raw: string): SaveData {
           ['draw', 'assemble', 'match'].includes(String(t.kind)) &&
           Number.isInteger(t.index) &&
           Number(t.index) >= 0 &&
-          Number(t.index) < (t.kind === 'draw' ? DRAW_LEVELS : t.kind === 'assemble' ? ASSEMBLE_LEVELS : MATCH_LEVELS) &&
+          Number(t.index) <
+            (t.kind === 'draw'
+              ? DRAW_LEVELS
+              : t.kind === 'assemble'
+                ? ASSEMBLE_LEVELS
+                : MATCH_LEVELS) &&
           validDraft(t.draft),
       ) ||
       !Number.isInteger(c.current) ||
@@ -154,10 +161,18 @@ export function parseSave(raw: string): SaveData {
     )
       throw new Error('比赛记录不完整，未导入。')
   }
+  // Version 1 shipped a sound flag that had no UI; treat those saves as sound-on.
+  const sound =
+    value.version === 1
+      ? true
+      : record(value.settings) && typeof value.settings.sound === 'boolean'
+        ? value.settings.sound
+        : true
   return {
     ...freshSave(),
     ...value,
-    settings: { sound: record(value.settings) && value.settings.sound === true },
+    version: 2,
+    settings: { sound },
   } as SaveData
 }
 export function loadSave(): { data: SaveData; warning: string } {
@@ -184,7 +199,7 @@ export const starsFor = (d: Draft) =>
 export const levelKey = (kind: GameKind, index: number) => `${kind}:${index}`
 export const examLabel: Record<ExamType, string> = {
   mixed: '综合挑战',
-  draw: '画线专项',
+  draw: '分解专项',
   assemble: '组装专项',
   match: '火柴专项',
 }
@@ -192,14 +207,15 @@ export function makeCompetition(type: ExamType, now = Date.now()): CompetitionSe
   const seed = Math.floor(now / 1000),
     task = (kind: GameKind, i: number) => ({
       kind,
-      index: (seed + i * 7) % (kind === 'draw' ? DRAW_LEVELS : kind === 'assemble' ? ASSEMBLE_LEVELS : MATCH_LEVELS),
+      index:
+        (seed + i * 7) %
+        (kind === 'draw' ? DRAW_LEVELS : kind === 'assemble' ? ASSEMBLE_LEVELS : MATCH_LEVELS),
       draft: emptyDraft(),
     })
   const tasks =
     type === 'mixed'
       ? [
-          ...Array.from({ length: 4 }, (_, i) => task('draw', i)),
-          ...Array.from({ length: 2 }, (_, i) => task('assemble', i)),
+          ...Array.from({ length: 6 }, (_, i) => task('draw', i)),
           ...Array.from({ length: 4 }, (_, i) => task('match', i)),
         ]
       : Array.from({ length: type === 'draw' ? 6 : type === 'assemble' ? 6 : 10 }, (_, i) =>

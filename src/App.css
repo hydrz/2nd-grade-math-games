@@ -193,6 +193,15 @@
   font-size: 10px;
   font-weight: 500;
 }
+.sound-toggle {
+  background: #f2f6ec;
+  color: #94a58e;
+}
+.sound-toggle:hover,
+.sound-toggle.active {
+  background: #e4efe3;
+  color: var(--teal);
+}
 .page-title {
   display: flex;
   justify-content: space-between;

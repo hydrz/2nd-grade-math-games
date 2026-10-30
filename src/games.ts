@@ -3,7 +3,7 @@ import { PIECES, bounds, checkAssembly, checkDrawing, silhouette } from './geome
 import { MATCHES, checkMatch } from './matches'
 import { TANGRAMS } from './tangrams'
 import type { CheckResult, Draft, GameKind, Placement, Point, TangramPuzzle } from './types'
-export const kindLabel = { draw: '七巧板画线', assemble: '七巧板组装', match: '火柴棒挑战' }
+export const kindLabel = { draw: '七巧板分解', assemble: '七巧板组装', match: '火柴棒挑战' }
 export const kindIcon = { draw: Pencil, assemble: Shapes, match: Flame }
 export function scatter(puzzle: TangramPuzzle): Placement[] {
   const b = bounds(silhouette(puzzle.placements)),

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { MousePointer2, MoveRight } from 'lucide-react'
 import { changeCounts, operationLabel } from '../matches'
+import { playSound } from '../sound'
 import type { MatchPuzzle } from '../types'
 
 const segments = [
@@ -45,17 +46,22 @@ export function MatchCanvas({
     if (puzzle.operation === 'remove' && present) {
       next[i] &= ~(1 << bit)
       onChange(next)
+      playSound('match')
     }
     if (puzzle.operation === 'add' && !present) {
       next[i] |= 1 << bit
       onChange(next)
+      playSound('match')
     }
     if (puzzle.operation === 'move') {
-      if (present) setSelected((prev) => (prev?.[0] === i && prev[1] === bit ? null : [i, bit]))
-      else if (selected) {
+      if (present) {
+        playSound('pick')
+        setSelected((prev) => (prev?.[0] === i && prev[1] === bit ? null : [i, bit]))
+      } else if (selected) {
         next[selected[0]] &= ~(1 << selected[1])
         next[i] |= 1 << bit
         onChange(next)
+        playSound('match')
         setSelected(null)
       }
     }
@@ -103,6 +109,7 @@ export function MatchCanvas({
               next[drag.from[0]] &= ~(1 << drag.from[1])
               next[i] |= 1 << bit
               onChange(next)
+              playSound('match')
               setSelected(null)
             }
           }

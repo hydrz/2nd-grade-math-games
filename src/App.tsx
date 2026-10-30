@@ -29,6 +29,8 @@ import {
   Trash2,
   Trophy,
   Upload,
+  Volume2,
+  VolumeX,
   X,
 } from 'lucide-react'
 import { MiniTangram } from './components/PuzzleCanvas'
@@ -53,6 +55,7 @@ import {
 } from './storage'
 import { buildPath, parseRoute, type GrowthTab, type MatchOperation, type Page } from './routes'
 import { sorted } from './collections'
+import { playSound, setSoundEnabled } from './sound'
 import type { CheckResult, Draft, ExamType, GameKind, SaveData } from './types'
 import './App.css'
 import './game.css'
@@ -60,7 +63,7 @@ import './growth.css'
 import './responsive.css'
 import './accessibility.css'
 
-const counts = { draw: TANGRAMS.length, assemble: TANGRAMS.length, match: 60 }
+const counts = { draw: TANGRAMS.length, match: 60 }
 const realms = [
   {
     kind: 'draw' as const,
@@ -68,13 +71,6 @@ const realms = [
     description: '一支笔，发现图形里的秘密',
     color: 'teal',
     label: '观察力 × 空间想象',
-  },
-  {
-    kind: 'assemble' as const,
-    name: '七巧创作营',
-    description: '转一转，拼出奇妙的新世界',
-    color: 'orange',
-    label: '动手力 × 几何思维',
   },
   {
     kind: 'match' as const,
@@ -126,6 +122,17 @@ export function AppContent() {
     [resultScore, setResultScore] = useState<number | null>(null)
   const [saveLabel, setSaveLabel] = useState('进度已自动保存')
 
+  useEffect(() => {
+    setSoundEnabled(data.settings.sound)
+  }, [data.settings.sound])
+
+  function toggleSound() {
+    const on = !data.settings.sound
+    setSoundEnabled(on)
+    update((s) => ({ ...s, settings: { ...s.settings, sound: on } }))
+    if (on) playSound('star')
+  }
+
   function update(fn: (current: SaveData) => SaveData) {
     const next = fn(dataRef.current)
     dataRef.current = next
@@ -143,13 +150,13 @@ export function AppContent() {
     Object.keys(data.stars).filter((k) => k.startsWith(`${kind}:`)).length
   const totalStars = Object.values(data.stars).reduce((sum, v) => sum + v, 0),
     totalDone = Object.keys(data.stars).length
-  const nextLevel = (kind: GameKind) => {
+  const nextLevel = (kind: 'draw' | 'match') => {
     let n = 0
     while (n < counts[kind] - 1 && data.stars[levelKey(kind, n)]) n++
     return n
   }
 
-  const practiceKind = page === 'draw' || page === 'assemble' || page === 'match' ? page : null
+  const practiceKind = page === 'draw' || page === 'match' ? page : null
   const level = practiceKind
     ? route.levelIndex !== undefined
       ? Math.max(0, Math.min(counts[practiceKind] - 1, route.levelIndex))
@@ -167,9 +174,7 @@ export function AppContent() {
     setResultScore(null)
     window.scrollTo({ top: 0, behavior: 'instant' })
     const targetIndex =
-      next === 'draw' || next === 'assemble' || next === 'match'
-        ? (index ?? nextLevel(next))
-        : undefined
+      next === 'draw' || next === 'match' ? (index ?? nextLevel(next)) : undefined
     routerNavigate(
       buildPath(next, targetIndex, tab, op ?? (next === 'match' ? operation : undefined)),
     )
@@ -241,6 +246,7 @@ export function AppContent() {
       return { ...next, mistakes }
     })
     setResultScore(score)
+    playSound(score >= 80 ? 'fanfare' : 'success')
   }
 
   const finishRef = useRef(finishExam)
@@ -300,12 +306,11 @@ export function AppContent() {
 
   const medals = [
     { name: '勇敢出发', detail: '完成第一关', earned: totalDone >= 1, icon: Flag },
-    { name: '图形侦探', detail: '完成全部画线关卡', earned: completed('draw') >= counts.draw, icon: Pencil },
     {
-      name: '巧手建筑师',
-      detail: '完成全部组装关卡',
-      earned: completed('assemble') >= 24,
-      icon: Shapes,
+      name: '图形侦探',
+      detail: '完成全部分解关卡',
+      earned: completed('draw') >= counts.draw,
+      icon: Pencil,
     },
     {
       name: '火柴魔法师',
@@ -356,8 +361,7 @@ export function AppContent() {
           <nav aria-label="主要导航">
             {[
               { key: 'home' as const, label: '闯关地图', icon: Compass },
-              { key: 'draw' as const, label: '七巧板 · 画线', icon: Pencil },
-              { key: 'assemble' as const, label: '七巧板 · 组装', icon: Shapes },
+              { key: 'draw' as const, label: '七巧板 · 分解', icon: Pencil },
               { key: 'match' as const, label: '火柴棒挑战', icon: Flame },
             ].map((item) => (
               <button
@@ -428,6 +432,15 @@ export function AppContent() {
               </strong>
             </div>
             <div className="topbar-status">
+              <button
+                className={data.settings.sound ? 'tool sound-toggle active' : 'tool sound-toggle'}
+                aria-label={data.settings.sound ? '关闭音效' : '开启音效'}
+                aria-pressed={data.settings.sound}
+                title={data.settings.sound ? '关闭音效' : '开启音效'}
+                onClick={toggleSound}
+              >
+                {data.settings.sound ? <Volume2 size={18} /> : <VolumeX size={18} />}
+              </button>
               <span className="autosave">
                 <CloudCheck size={16} />
                 {saveLabel}
@@ -559,10 +572,7 @@ export function AppContent() {
                           </g>
                         </svg>
                       ) : (
-                        <MiniTangram
-                          puzzle={TANGRAMS[r.kind === 'draw' ? 8 : 3]}
-                          colored={r.kind === 'assemble'}
-                        />
+                        <MiniTangram puzzle={TANGRAMS[8]} />
                       )}
                     </div>
                     <div className="realm-content">
@@ -590,7 +600,9 @@ export function AppContent() {
                 <div className="next-adventure">
                   <div className="section-title">
                     <h2>我的探险足迹</h2>
-                    <span>{completed('draw')} / {counts.draw} 关</span>
+                    <span>
+                      {completed('draw')} / {counts.draw} 关
+                    </span>
                   </div>
                   <p>图形探索岛 · 把观察变成你的超能力</p>
                   <div className="path-map">
@@ -612,7 +624,7 @@ export function AppContent() {
                           className={`path-stop stop-${i} ${done ? 'done' : unlocked ? 'current' : 'locked'}`}
                           disabled={!unlocked}
                           onClick={() => navigate('draw', i)}
-                          aria-label={`画线第${i + 1}关${unlocked ? '' : '，未解锁'}`}
+                          aria-label={`分解第${i + 1}关${unlocked ? '' : '，未解锁'}`}
                         >
                           <span>
                             {done ? (
@@ -701,9 +713,7 @@ export function AppContent() {
                             <strong>
                               {practiceKind === 'draw'
                                 ? TANGRAMS[i].name
-                                : practiceKind === 'assemble'
-                                  ? TANGRAMS[i].name
-                                  : `${operationLabel[MATCHES[i].operation]}${MATCHES[i].count}根火柴`}
+                                : `${operationLabel[MATCHES[i].operation]}${MATCHES[i].count}根火柴`}
                             </strong>
                             <Stars value={stars} size={12} />
                           </span>
@@ -721,9 +731,7 @@ export function AppContent() {
                     <strong>
                       {practiceKind === 'draw'
                         ? TANGRAMS[level].name
-                        : practiceKind === 'assemble'
-                          ? TANGRAMS[level].name
-                          : `${operationLabel[MATCHES[level].operation]}${MATCHES[level].count}根的巧思`}
+                        : `${operationLabel[MATCHES[level].operation]}${MATCHES[level].count}根的巧思`}
                     </strong>
                     <Stars value={data.stars[levelKey(practiceKind, level)] || 0} />
                   </div>
@@ -812,9 +820,7 @@ export function AppContent() {
                         }
                       >
                         {i + 1}
-                        <small>
-                          {t.kind === 'draw' ? '画线' : t.kind === 'assemble' ? '组装' : '火柴'}
-                        </small>
+                        <small>{t.kind === 'draw' ? '分解' : '火柴'}</small>
                       </button>
                     ))}
                     <button
@@ -861,7 +867,7 @@ export function AppContent() {
                           带你走得更远。
                         </h2>
                         <p>
-                          七巧板画线 × 拼板组装 × 火柴算式
+                          七巧板分解 × 火柴算式
                           <br />
                           综合卷满分100分，达到80分即可获得荣誉奖状。
                         </p>
@@ -887,7 +893,7 @@ export function AppContent() {
                     </section>
                   )}
                   <div className="exam-options">
-                    {(['mixed', 'draw', 'assemble', 'match'] as const).map((type) => (
+                    {(['mixed', 'draw', 'match'] as const).map((type) => (
                       <button
                         className={`exam-option ${type === 'mixed' ? 'featured' : ''}`}
                         key={type}
@@ -909,12 +915,10 @@ export function AppContent() {
                         <h3>{examLabel[type]}</h3>
                         <p>
                           {type === 'mixed'
-                            ? '4题画线＋2题组装＋4题火柴'
+                            ? '6题分解＋4题火柴'
                             : type === 'draw'
-                              ? '6道画线分解题'
-                              : type === 'assemble'
-                                ? '6道拼板组装题'
-                                : '10道火柴棒算式题'}
+                              ? '6道分解题'
+                              : '10道火柴棒算式题'}
                         </p>
                         <span>
                           开始挑战
@@ -1245,18 +1249,9 @@ export function AppContent() {
                 <div className="guide-section">
                   <Pencil />
                   <div>
-                    <h3>画线：看见藏起来的七块板</h3>
+                    <h3>分解：先拼一拼，再画出七块板</h3>
                     <p>
-                      拖出直线或半圆弧，把四个轮廓分别分成标准七块。放大画布更容易操作，吸附点会帮你接好线。
-                    </p>
-                  </div>
-                </div>
-                <div className="guide-section">
-                  <Shapes />
-                  <div>
-                    <h3>组装：七块全部用上</h3>
-                    <p>
-                      拖动拼板，选中后用45°旋转和翻面按钮调整，靠近边缘会吸附。分离的圆形也是图案的一部分。
+                      左边自由拼组七块板，拼好后点「检查拼法」确认；右边照着轮廓点两个圆点画出分界线，直线自动对齐45°角。
                     </p>
                   </div>
                 </div>
