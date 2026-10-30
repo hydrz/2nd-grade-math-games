@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import {
   Check,
   CheckCheck,
@@ -6,20 +6,21 @@ import {
   Pencil,
   RotateCcw,
   Eye,
-  Star,
   ChevronRight,
   Shapes,
   ShieldCheck,
-} from 'lucide-react'
-import { MATCHES } from '../matches'
-import { TANGRAMS } from '../tangrams'
-import { emptyDraft } from '../storage'
-import { checkAssembly } from '../geometry'
-import { AssemblyCanvas, DrawCanvas } from './PuzzleCanvas'
-import { checkGame, scatter } from '../games'
-import { MatchCanvas } from './MatchCanvas'
-import { playSound } from '../sound'
-import type { CheckResult, Draft, GameKind } from '../types'
+} from 'lucide-react';
+import { MATCHES } from '../match/matches';
+import { TANGRAMS } from '../tangram/tangrams';
+import { emptyDraft, starsFor } from '../core/storage';
+import { checkAssembly } from '../tangram/geometry';
+import { AssemblyCanvas } from './tangram/AssemblyCanvas'
+import { DrawCanvas } from './tangram/DrawCanvas';
+import { checkGame, scatter } from '../core/games';
+import { MatchCanvas } from './match/MatchCanvas';
+import { Stars } from './ui/Stars';
+import { playSound } from '../core/sound';
+import type { CheckResult, Draft, GameKind } from '../core/types';
 
 export function GamePanel({
   kind,
@@ -30,35 +31,35 @@ export function GamePanel({
   exam = false,
   onNext,
 }: {
-  kind: GameKind
-  index: number
-  draft: Draft
-  onDraft: (d: Draft) => void
-  onResult: (results: CheckResult[], draft: Draft) => void
-  exam?: boolean
-  onNext?: () => void
+  kind: GameKind;
+  index: number;
+  draft: Draft;
+  onDraft: (d: Draft) => void;
+  onResult: (results: CheckResult[], draft: Draft) => void;
+  exam?: boolean;
+  onNext?: () => void;
 }) {
   const [feedback, setFeedback] = useState<CheckResult[] | null>(null),
     [submitted, setSubmitted] = useState(false),
     [showHint, setShowHint] = useState(false),
     [showAnswer, setShowAnswer] = useState(false),
-    [assembleCheck, setAssembleCheck] = useState<CheckResult | null>(null)
+    [assembleCheck, setAssembleCheck] = useState<CheckResult | null>(null);
   const puzzle = TANGRAMS[index],
-    allGood = submitted && !!feedback && feedback.every((r) => r.ok)
+    allGood = submitted && !!feedback && feedback.every((r) => r.ok);
   function update(next: Draft) {
-    setSubmitted(false)
-    setFeedback(null)
-    onDraft({ ...next, completed: false })
+    setSubmitted(false);
+    setFeedback(null);
+    onDraft({ ...next, completed: false });
   }
   function check() {
-    const results = checkGame(kind, index, draft)
-    setFeedback(results)
-    setSubmitted(true)
-    onResult(results, draft)
+    const results = checkGame(kind, index, draft);
+    setFeedback(results);
+    setSubmitted(true);
+    onResult(results, draft);
     if (results.every((r) => r.ok)) {
-      playSound('success')
-      if (!draft.revealed) window.setTimeout(() => playSound('star'), 380)
-    } else playSound('retry')
+      playSound('success');
+      if (!draft.revealed) window.setTimeout(() => playSound('star'), 380);
+    } else playSound('retry');
   }
   return (
     <div className="game-panel">
@@ -86,27 +87,37 @@ export function GamePanel({
                 puzzle={puzzle}
                 placements={draft.placements || scatter(puzzle)}
                 onChange={(placements) => {
-                  setAssembleCheck(null)
-                  update({ ...draft, placements })
+                  setAssembleCheck(null);
+                  update({ ...draft, placements });
                 }}
                 reveal={false}
                 hint={false}
-                bad={assembleCheck && !assembleCheck.ok ? (assembleCheck.regions ?? null) : null}
+                bad={
+                  assembleCheck && !assembleCheck.ok
+                    ? (assembleCheck.regions ?? null)
+                    : null
+                }
               />
               <div className="assemble-verify">
                 <button
                   className="secondary"
                   onClick={() => {
-                    const result = checkAssembly(puzzle, draft.placements || scatter(puzzle))
-                    setAssembleCheck(result)
-                    playSound(result.ok ? 'success' : 'retry')
+                    const result = checkAssembly(
+                      puzzle,
+                      draft.placements || scatter(puzzle),
+                    );
+                    setAssembleCheck(result);
+                    playSound(result.ok ? 'success' : 'retry');
                   }}
                 >
                   <ShieldCheck size={17} />
                   检查拼法
                 </button>
                 {assembleCheck && (
-                  <p className={`assemble-feedback ${assembleCheck.ok ? 'good' : ''}`} role="status">
+                  <p
+                    className={`assemble-feedback ${assembleCheck.ok ? 'good' : ''}`}
+                    role="status"
+                  >
                     {assembleCheck.ok ? <Check size={14} /> : null}
                     {assembleCheck.message}
                   </p>
@@ -155,8 +166,12 @@ export function GamePanel({
             <button
               className="text-button"
               onClick={() => {
-                playSound('hint')
-                update({ ...draft, matches: MATCHES[index].solutions[0], revealed: true })
+                playSound('hint');
+                update({
+                  ...draft,
+                  matches: MATCHES[index].solutions[0],
+                  revealed: true,
+                });
               }}
             >
               摆出参考解
@@ -165,7 +180,10 @@ export function GamePanel({
         </div>
       )}
       {submitted && feedback && (
-        <div className={`feedback ${allGood ? 'success' : 'retry'}`} role="status">
+        <div
+          className={`feedback ${allGood ? 'success' : 'retry'}`}
+          role="status"
+        >
           {allGood ? <CheckCheck size={24} /> : <Lightbulb size={23} />}
           <div>
             <strong>
@@ -178,22 +196,7 @@ export function GamePanel({
             {kind !== 'draw' && <p>{feedback[0]?.message}</p>}
             {allGood && !draft.revealed && (
               <span className="earned-stars">
-                {Array.from({ length: 3 }, (_, i) => (
-                  <Star
-                    key={i}
-                    size={20}
-                    fill={
-                      i <
-                      (draft.hints === 0 && draft.errors === 0
-                        ? 3
-                        : draft.hints <= 1 && draft.errors <= 2
-                          ? 2
-                          : 1)
-                        ? 'currentColor'
-                        : 'none'
-                    }
-                  />
-                ))}
+                <Stars value={starsFor(draft)} size={20} />
               </span>
             )}
           </div>
@@ -201,8 +204,8 @@ export function GamePanel({
             <button
               className="primary"
               onClick={() => {
-                playSound('tap')
-                onNext()
+                playSound('tap');
+                onNext();
               }}
             >
               下一关
@@ -218,9 +221,9 @@ export function GamePanel({
               <button
                 className="secondary"
                 onClick={() => {
-                  playSound('hint')
-                  setShowHint(true)
-                  onDraft({ ...draft, hints: draft.hints + 1 })
+                  playSound('hint');
+                  setShowHint(true);
+                  onDraft({ ...draft, hints: draft.hints + 1 });
                 }}
               >
                 <Lightbulb size={18} />
@@ -229,9 +232,9 @@ export function GamePanel({
               <button
                 className="text-button"
                 onClick={() => {
-                  playSound('hint')
-                  setShowAnswer(true)
-                  onDraft({ ...draft, revealed: true })
+                  playSound('hint');
+                  setShowAnswer(true);
+                  onDraft({ ...draft, revealed: true });
                 }}
               >
                 <Eye size={17} />
@@ -242,16 +245,16 @@ export function GamePanel({
           <button
             className="text-button"
             onClick={() => {
-              playSound('erase')
+              playSound('erase');
               onDraft({
                 ...emptyDraft(),
                 errors: draft.errors,
                 hints: draft.hints,
                 revealed: draft.revealed,
-              })
-              setFeedback(null)
-              setShowHint(false)
-              setShowAnswer(false)
+              });
+              setFeedback(null);
+              setShowHint(false);
+              setShowAnswer(false);
             }}
           >
             <RotateCcw size={17} />
@@ -261,11 +264,11 @@ export function GamePanel({
             <button
               className="secondary"
               onClick={() => {
-                playSound('tap')
-                onDraft(emptyDraft())
-                setFeedback(null)
-                setShowAnswer(false)
-                setShowHint(false)
+                playSound('tap');
+                onDraft(emptyDraft());
+                setFeedback(null);
+                setShowAnswer(false);
+                setShowHint(false);
               }}
             >
               重新挑战
@@ -282,5 +285,5 @@ export function GamePanel({
         )}
       </div>
     </div>
-  )
+  );
 }

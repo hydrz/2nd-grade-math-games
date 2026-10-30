@@ -1,0 +1,6 @@
+/* Stylesheet entry: fonts, tokens and base first, then feature layers.
+   main.tsx imports this plus adventure.css (theme overlay, must stay last). */
+@import '@fontsource-variable/nunito';
+@import '@fontsource-variable/noto-sans-sc';
+@import './tokens.css';
+@import './base.css';

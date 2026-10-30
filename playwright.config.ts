@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: false,
@@ -11,7 +11,10 @@ export default defineConfig({
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
     {
       name: 'tablet',
-      use: { ...devices['iPad (gen 7) landscape'], defaultBrowserType: 'chromium' },
+      use: {
+        ...devices['iPad (gen 7) landscape'],
+        defaultBrowserType: 'chromium',
+      },
     },
   ],
   webServer: {
@@ -19,4 +22,4 @@ export default defineConfig({
     url: 'http://127.0.0.1:5174',
     reuseExistingServer: true,
   },
-})
+});

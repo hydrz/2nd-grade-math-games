@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react'
-import { MousePointer2, MoveRight } from 'lucide-react'
-import { changeCounts, operationLabel } from '../matches'
-import { playSound } from '../sound'
-import type { MatchPuzzle } from '../types'
+import { useRef, useState } from 'react';
+import { MousePointer2, MoveRight } from 'lucide-react';
+import { changeCounts, operationLabel } from '../../match/matches';
+import { playSound } from '../../core/sound';
+import type { MatchPuzzle } from '../../core/types';
 
 const segments = [
   [12, 10, 62, 10],
@@ -12,8 +12,8 @@ const segments = [
   [7, 73, 7, 113],
   [7, 17, 7, 57],
   [12, 65, 62, 65],
-]
-const offsets = [15, 98, 188, 271, 354, 505, 588]
+];
+const offsets = [15, 98, 188, 271, 354, 505, 588];
 export function MatchCanvas({
   puzzle,
   state,
@@ -22,47 +22,53 @@ export function MatchCanvas({
   hint = false,
   reveal = false,
 }: {
-  puzzle: MatchPuzzle
-  state: number[]
-  onChange: (s: number[]) => void
-  disabled?: boolean
-  hint?: boolean
-  reveal?: boolean
+  puzzle: MatchPuzzle;
+  state: number[];
+  onChange: (s: number[]) => void;
+  disabled?: boolean;
+  hint?: boolean;
+  reveal?: boolean;
 }) {
-  const [selected, setSelected] = useState<[number, number] | null>(null)
-  const dragging = useRef<{ from: [number, number]; x: number; y: number } | null>(null),
-    suppressClick = useRef(false)
-  const { removed, added } = changeCounts(puzzle.initial, state)
+  const [selected, setSelected] = useState<[number, number] | null>(null);
+  const dragging = useRef<{
+      from: [number, number];
+      x: number;
+      y: number;
+    } | null>(null),
+    suppressClick = useRef(false);
+  const { removed, added } = changeCounts(puzzle.initial, state);
   const solution = puzzle.solutions[0],
     changed = state.flatMap((mask, i) =>
       Array.from({ length: i === 2 ? 2 : 7 }, (_, bit) => ({ i, bit })).filter(
         (v) => !!(mask & (1 << v.bit)) !== !!(solution[i] & (1 << v.bit)),
       ),
-    )
+    );
   function click(i: number, bit: number) {
-    if (disabled) return
+    if (disabled) return;
     const present = !!(state[i] & (1 << bit)),
-      next = [...state]
+      next = [...state];
     if (puzzle.operation === 'remove' && present) {
-      next[i] &= ~(1 << bit)
-      onChange(next)
-      playSound('match')
+      next[i] &= ~(1 << bit);
+      onChange(next);
+      playSound('match');
     }
     if (puzzle.operation === 'add' && !present) {
-      next[i] |= 1 << bit
-      onChange(next)
-      playSound('match')
+      next[i] |= 1 << bit;
+      onChange(next);
+      playSound('match');
     }
     if (puzzle.operation === 'move') {
       if (present) {
-        playSound('pick')
-        setSelected((prev) => (prev?.[0] === i && prev[1] === bit ? null : [i, bit]))
+        playSound('pick');
+        setSelected((prev) =>
+          prev?.[0] === i && prev[1] === bit ? null : [i, bit],
+        );
       } else if (selected) {
-        next[selected[0]] &= ~(1 << selected[1])
-        next[i] |= 1 << bit
-        onChange(next)
-        playSound('match')
-        setSelected(null)
+        next[selected[0]] &= ~(1 << selected[1]);
+        next[i] |= 1 << bit;
+        onChange(next);
+        playSound('match');
+        setSelected(null);
       }
     }
   }
@@ -83,34 +89,37 @@ export function MatchCanvas({
         role="img"
         aria-label={`${operationLabel[puzzle.operation]}${puzzle.count}根火柴算式画布`}
         onPointerMove={(e) => {
-          const d = dragging.current
+          const d = dragging.current;
           if (d && Math.hypot(e.clientX - d.x, e.clientY - d.y) >= 6) {
-            e.currentTarget.setPointerCapture(e.pointerId)
-            setSelected(d.from)
+            e.currentTarget.setPointerCapture(e.pointerId);
+            setSelected(d.from);
           }
         }}
         onPointerCancel={() => {
-          dragging.current = null
+          dragging.current = null;
         }}
         onPointerUp={(e) => {
-          const drag = dragging.current
-          dragging.current = null
-          if (!drag || Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6) return
-          suppressClick.current = true
+          const drag = dragging.current;
+          dragging.current = null;
+          if (!drag || Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6)
+            return;
+          suppressClick.current = true;
           setTimeout(() => {
-            suppressClick.current = false
-          }, 0)
-          const element = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-slot]')
+            suppressClick.current = false;
+          }, 0);
+          const element = document
+            .elementFromPoint(e.clientX, e.clientY)
+            ?.closest('[data-slot]');
           if (element) {
             const i = Number(element.getAttribute('data-cell')),
-              bit = Number(element.getAttribute('data-bit'))
+              bit = Number(element.getAttribute('data-bit'));
             if (!(state[i] & (1 << bit))) {
-              const next = [...state]
-              next[drag.from[0]] &= ~(1 << drag.from[1])
-              next[i] |= 1 << bit
-              onChange(next)
-              playSound('match')
-              setSelected(null)
+              const next = [...state];
+              next[drag.from[0]] &= ~(1 << drag.from[1]);
+              next[i] |= 1 << bit;
+              onChange(next);
+              playSound('match');
+              setSelected(null);
             }
           }
         }}
@@ -125,10 +134,11 @@ export function MatchCanvas({
               : segments
             ).map(([x1, y1, x2, y2], bit) => {
               const present = !!(state[i] & (1 << bit)),
+                vacated = !present && !!(puzzle.initial[i] & (1 << bit)),
                 chosen = selected?.[0] === i && selected[1] === bit,
                 mark = reveal
                   ? changed.some((v) => v.i === i && v.bit === bit)
-                  : hint && changed[0]?.i === i && changed[0].bit === bit
+                  : hint && changed[0]?.i === i && changed[0].bit === bit;
               return (
                 <g
                   key={bit}
@@ -139,19 +149,24 @@ export function MatchCanvas({
                   tabIndex={disabled ? -1 : 0}
                   aria-label={`${i + 1}号位置${bit + 1}段，${present ? '有火柴' : '空槽'}`}
                   aria-pressed={chosen}
-                  className={`match-slot ${present ? 'present' : 'empty'} ${chosen ? 'chosen' : ''}`}
+                  className={`match-slot ${present ? 'present' : 'empty'} ${vacated ? 'vacated' : ''} ${chosen ? 'chosen' : ''}`}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      click(i, bit)
+                      e.preventDefault();
+                      click(i, bit);
                     }
                   }}
                   onClick={() => {
-                    if (!suppressClick.current) click(i, bit)
+                    if (!suppressClick.current) click(i, bit);
                   }}
                   onPointerDown={(e) => {
-                    if (puzzle.operation !== 'move' || !present || disabled) return
-                    dragging.current = { from: [i, bit], x: e.clientX, y: e.clientY }
+                    if (puzzle.operation !== 'move' || !present || disabled)
+                      return;
+                    dragging.current = {
+                      from: [i, bit],
+                      x: e.clientX,
+                      y: e.clientY,
+                    };
                   }}
                 >
                   <rect
@@ -198,7 +213,7 @@ export function MatchCanvas({
                     />
                   )}
                 </g>
-              )
+              );
             })}
           </g>
         ))}
@@ -225,7 +240,11 @@ export function MatchCanvas({
         <MoveRight size={17} />
         等号保持不变
       </p>
-      {hint && <p className="match-hint">提示：看看浅黄色标记附近，那里可能藏着突破口。</p>}
+      {hint && (
+        <p className="match-hint">
+          提示：看看浅黄色标记附近，那里可能藏着突破口。
+        </p>
+      )}
     </div>
-  )
+  );
 }

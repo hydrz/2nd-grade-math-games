@@ -671,7 +671,8 @@
   padding: 6px;
   font-size: 11px;
   min-height: 44px;
-}.draw-studio {
+}
+.draw-studio {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   gap: 16px;

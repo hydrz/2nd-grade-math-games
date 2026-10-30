@@ -1,0 +1,22 @@
+/* Design tokens: the semantic custom properties every feature stylesheet builds on.
+   Theme layers (adventure.css) may override the values, never the names. */
+:root {
+  font-family: 'Nunito Variable', 'Noto Sans SC Variable', sans-serif;
+  color: #2a423b;
+  background: #f7f8f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 450;
+  font-size: 14px;
+  line-height: 1.65;
+  --ink: #2a423b;
+  --muted: #69796f;
+  --teal: #167c69;
+  --orange: #d77d40;
+  --paper: #fffef9;
+  --line: #e4e9df;
+  --radius: 16px;
+  --shadow: 0 6px 24px #364e3b08;
+}

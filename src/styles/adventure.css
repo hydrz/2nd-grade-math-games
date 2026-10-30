@@ -22,7 +22,8 @@
   --line: #c6d9dc;
   --radius: 20px;
   --shadow: 0 4px 0 var(--sea), 0 12px 24px -6px rgba(22, 49, 79, 0.16);
-  --display: 'ZCOOL KuaiLe', 'Nunito Variable', 'Noto Sans SC Variable', sans-serif;
+  --display:
+    'ZCOOL KuaiLe', 'Nunito Variable', 'Noto Sans SC Variable', sans-serif;
   color: var(--ink);
   background: var(--sky);
   font-size: 15px;
@@ -370,7 +371,8 @@ select {
 .welcome-banner {
   background:
     radial-gradient(circle at 12% 120%, #2f78b4 0 22%, transparent 23%),
-    radial-gradient(circle at 98% -10%, #2f78b4 0 26%, transparent 27%), var(--sea-2);
+    radial-gradient(circle at 98% -10%, #2f78b4 0 26%, transparent 27%),
+    var(--sea-2);
   border: 2.5px solid var(--sea);
   border-radius: 28px;
   color: #fff;
