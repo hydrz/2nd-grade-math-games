@@ -24,6 +24,7 @@ export function AssemblyCanvas({
   hint,
   disabled = false,
   bad = null,
+  action = null,
 }: {
   puzzle: TangramPuzzle
   placements: Placement[]
@@ -32,6 +33,7 @@ export function AssemblyCanvas({
   hint: boolean
   disabled?: boolean
   bad?: MultiPolygon | null
+  action?: React.ReactNode
 }) {
   const [selected, setSelected] = useState<Placement['id']>('large'),
     [live, setLive] = useState<Placement[] | null>(null),
@@ -43,8 +45,8 @@ export function AssemblyCanvas({
   const target = silhouette(puzzle.placements),
     b = bounds(target),
     current = live || placements,
-    viewWidth = b.width + 6.6,
-    viewHeight = b.height + 5.5
+    viewWidth = b.width + 5.8,
+    viewHeight = b.height + 4.9
   // The SVG letterboxes its viewBox, so the limiting side may be the height.
   function screenScale(svg: SVGSVGElement) {
     const r = svg.getBoundingClientRect()
@@ -127,22 +129,9 @@ export function AssemblyCanvas({
             <FlipHorizontal2 size={17} />
             翻面
           </button>
-          <label className="angle-control">
-            角度
-            <input
-              type="number"
-              step="15"
-              aria-label="选中拼板角度"
-              value={Math.round(current.find((p) => p.id === selected)!.angle % 360)}
-              disabled={disabled}
-              onChange={(e) => {
-                const value = Number(e.target.value)
-                if (Number.isFinite(value))
-                  changeSelected(value - placements.find((p) => p.id === selected)!.angle)
-              }}
-            />
-            °
-          </label>
+          <span className="angle-readout" aria-label="选中拼板角度">
+            {Math.round(current.find((p) => p.id === selected)!.angle % 360)}°
+          </span>
           <button
             className="tool"
             aria-label="撤销组装"
@@ -169,11 +158,12 @@ export function AssemblyCanvas({
           >
             <Redo2 size={18} />
           </button>
+          {action}
         </div>
       </div>
       <svg
         className="assembly-svg"
-        viewBox={`${b.x - 3.3} ${b.y - 2.3} ${viewWidth} ${viewHeight}`}
+        viewBox={`${b.x - 2.9} ${b.y - 2.45} ${viewWidth} ${viewHeight}`}
         onPointerMove={(e) => {
           if (!drag.current) return
           const raw = draggedTo(localPoint(e)),
@@ -217,9 +207,9 @@ export function AssemblyCanvas({
           d={pathOf(target)}
           fill="#fff"
           fillRule="evenodd"
-          stroke="#96a69b"
-          strokeWidth=".022"
-          strokeDasharray=".08 .06"
+          stroke="#6e8479"
+          strokeWidth=".028"
+          strokeDasharray=".09 .07"
         />
         {(reveal
           ? puzzle.placements

@@ -141,13 +141,23 @@ export function AppContent() {
     }
   }
 
+  // Finishing a level counts even without stars (after viewing the answer), so progress never dead-ends.
   const completed = (kind: GameKind) =>
-    Object.keys(data.stars).filter((k) => k.startsWith(`${kind}:`)).length;
+    new Set([
+      ...Object.keys(data.stars).filter((k) => k.startsWith(`${kind}:`)),
+      ...Object.keys(data.drafts).filter(
+        (k) => k.startsWith(`${kind}:`) && data.drafts[k]?.completed,
+      ),
+    ]).size;
   const totalStars = Object.values(data.stars).reduce((sum, v) => sum + v, 0),
-    totalDone = Object.keys(data.stars).length;
+    totalDone = new Set([
+      ...Object.keys(data.stars),
+      ...Object.keys(data.drafts).filter((k) => data.drafts[k]?.completed),
+    ]).size;
   const nextLevel = (kind: 'draw' | 'match') => {
     let n = 0;
-    while (n < counts[kind] - 1 && data.stars[levelKey(kind, n)]) n++;
+    while (n < counts[kind] - 1 && (data.stars[levelKey(kind, n)] || data.drafts[levelKey(kind, n)]?.completed))
+      n++;
     return n;
   };
 
@@ -698,18 +708,20 @@ export function AppContent() {
                       />
                     </svg>
                     {Array.from({ length: 6 }, (_, i) => {
-                      const done = data.stars[levelKey('draw', i)],
+                      const earned = data.stars[levelKey('draw', i)] || 0,
+                        finished =
+                          earned > 0 || !!data.drafts[levelKey('draw', i)]?.completed,
                         unlocked = i <= nextLevel('draw');
                       return (
                         <button
                           key={i}
-                          className={`path-stop stop-${i} ${done ? 'done' : unlocked ? 'current' : 'locked'}`}
+                          className={`path-stop stop-${i} ${finished ? 'done' : unlocked ? 'current' : 'locked'}`}
                           disabled={!unlocked}
                           onClick={() => navigate('draw', i)}
                           aria-label={`分解第${i + 1}关${unlocked ? '' : '，未解锁'}`}
                         >
                           <span>
-                            {done ? (
+                            {finished ? (
                               <Check size={22} />
                             ) : unlocked ? (
                               <Flag size={21} />
@@ -718,7 +730,7 @@ export function AppContent() {
                             )}
                           </span>
                           <small>第{i + 1}关</small>
-                          {done && <Stars value={done} size={10} />}
+                          {earned > 0 && <Stars value={earned} size={10} />}
                         </button>
                       );
                     })}

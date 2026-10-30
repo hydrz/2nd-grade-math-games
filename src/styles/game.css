@@ -7,7 +7,7 @@
 }
 .practice-layout {
   display: grid;
-  grid-template-columns: 175px minmax(0, 1fr);
+  grid-template-columns: 205px minmax(0, 1fr);
   gap: 23px;
 }
 .level-picker {
@@ -659,24 +659,25 @@
   justify-content: center;
   margin-top: 22px;
 }
-.angle-control {
-  display: flex;
+.angle-readout {
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 10px;
-  color: #718469;
-}
-.angle-control input {
-  width: 62px;
-  padding: 6px;
-  font-size: 11px;
+  justify-content: center;
+  min-width: 52px;
   min-height: 44px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: #e4f3f1;
+  color: #16314f;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 .draw-studio {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   gap: 16px;
-  align-items: start;
+  align-items: stretch;
 }
 .studio-pane {
   background: #fff;
@@ -684,6 +685,8 @@
   border-radius: 11px;
   padding: 10px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 .pane-heading {
   display: flex;
@@ -700,20 +703,25 @@
   color: #8a9a84;
   font-size: 10px;
 }
-.studio-pane .assembly-board {
+.studio-pane .assembly-board,
+.studio-pane .draw-board {
   background: none;
   padding: 0;
+  border: 0;
+  border-radius: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 .studio-pane .assembly-svg,
 .studio-pane .drawing-svg {
-  height: 430px;
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 300px;
+  max-height: clamp(300px, 58vh, 560px);
   background: #fff;
   border-radius: 8px;
-}
-.studio-pane .draw-board {
-  border: 0;
-  background: none;
-  border-radius: 0;
 }
 .studio-pane .individual-feedback {
   margin: 4px 2px 2px;
@@ -729,28 +737,14 @@
   flex-wrap: wrap;
   row-gap: 6px;
 }
-.studio-pane .angle-control {
-  font-size: 10px;
-}
-.assemble-verify {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  padding: 0 2px 2px;
-}
-.assemble-verify .secondary {
-  font-size: 11px;
-  padding: 9px 13px;
-  white-space: nowrap;
-}
 .assemble-feedback {
-  font-size: 10px;
+  font-size: 11px;
   color: #9c6339;
   display: flex;
   align-items: center;
   gap: 5px;
   min-width: 0;
+  margin: 10px 2px 0;
 }
 .assemble-feedback.good {
   color: #308264;
@@ -761,6 +755,7 @@
   }
   .studio-pane .assembly-svg,
   .studio-pane .drawing-svg {
+    flex: none;
     height: 340px;
   }
 }

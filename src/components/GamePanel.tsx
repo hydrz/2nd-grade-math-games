@@ -97,32 +97,32 @@ export function GamePanel({
                     ? (assembleCheck.regions ?? null)
                     : null
                 }
+                action={
+                  <button
+                    className="secondary"
+                    onClick={() => {
+                      const result = checkAssembly(
+                        puzzle,
+                        draft.placements || scatter(puzzle),
+                      );
+                      setAssembleCheck(result);
+                      playSound(result.ok ? 'success' : 'retry');
+                    }}
+                  >
+                    <ShieldCheck size={16} />
+                    检查拼法
+                  </button>
+                }
               />
-              <div className="assemble-verify">
-                <button
-                  className="secondary"
-                  onClick={() => {
-                    const result = checkAssembly(
-                      puzzle,
-                      draft.placements || scatter(puzzle),
-                    );
-                    setAssembleCheck(result);
-                    playSound(result.ok ? 'success' : 'retry');
-                  }}
-                >
-                  <ShieldCheck size={17} />
-                  检查拼法
-                </button>
-                {assembleCheck && (
-                  <p
-                    className={`assemble-feedback ${assembleCheck.ok ? 'good' : ''}`}
-                    role="status"
+              {assembleCheck && (
+                <p
+                  className={`assemble-feedback ${assembleCheck.ok ? 'good' : ''}`}
+                  role="status"
                   >
                     {assembleCheck.ok ? <Check size={14} /> : null}
                     {assembleCheck.message}
                   </p>
                 )}
-              </div>
             </section>
             <section className="studio-pane">
               <div className="pane-heading">
@@ -189,7 +189,7 @@ export function GamePanel({
             <strong>
               {allGood
                 ? draft.revealed
-                  ? '已经完成，重新挑战来赢得星星吧'
+                  ? '完成啦！重新挑战可以赢得星星'
                   : '太棒了，这一关完成啦！'
                 : '再观察一下，你离答案更近了'}
             </strong>
@@ -200,7 +200,7 @@ export function GamePanel({
               </span>
             )}
           </div>
-          {allGood && !draft.revealed && onNext && (
+          {allGood && onNext && (
             <button
               className="primary"
               onClick={() => {

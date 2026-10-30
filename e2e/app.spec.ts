@@ -171,6 +171,23 @@ test('reference matchstick solution earns progress, restores it, and only counts
   await page.getByRole('button', { name: '检查答案', exact: true }).click();
   expect((await saved(page)).mistakes[0].streak).toBe(1);
 });
+test('finishing after viewing the answer still opens the next level without granting stars', async ({
+  page,
+}) => {
+  const data = freshSave();
+  data.drafts['match:0'] = { errors: 0, hints: 0, revealed: true };
+  await seed(page, data);
+  await page.goto('/');
+  await page.getByRole('button', { name: '火柴棒挑战', exact: true }).click();
+  await page.locator('[data-cell="6"][data-bit="6"]').click();
+  await page.getByRole('button', { name: '检查答案', exact: true }).click();
+  await expect(page.getByRole('button', { name: /下一关/ })).toBeVisible();
+  expect((await saved(page)).stars['match:0']).toBeUndefined();
+  expect((await saved(page)).drafts['match:0'].completed).toBe(true);
+  await page.getByRole('button', { name: /下一关/ }).click();
+  await expect(page.getByText('第 02 关')).toBeVisible();
+  expect((await saved(page)).stars['match:0']).toBeUndefined();
+});
 test('adding and moving matches support taps and accept actual legal solutions', async ({
   page,
 }) => {
@@ -430,7 +447,7 @@ test('assembly snaps loosely dragged pieces onto their answer slots and verifies
     y: p.y - origin.y,
   }));
   const b = bounds(silhouette(slots)),
-    view = { x: b.x - 3.3, y: b.y - 2.3, w: b.width + 6.6, h: b.height + 5.5 };
+    view = { x: b.x - 2.9, y: b.y - 2.45, w: b.width + 5.8, h: b.height + 4.9 };
   const data = freshSave();
   data.drafts['draw:0'] = {
     errors: 0,

@@ -25,14 +25,15 @@ export const kindIcon = { draw: Pencil, assemble: Shapes, match: Flame };
 export function scatter(puzzle: TangramPuzzle): Placement[] {
   const b = bounds(silhouette(puzzle.placements)),
     cx = b.x + b.width / 2;
+  // Kept close to the outline so the shared viewport stays tight and pieces render large.
   const points: Point[] = [
-    [b.x - 1, b.y - 1.5],
-    [cx, b.y - 1.5],
-    [b.x + b.width + 1, b.y - 1.5],
-    [b.x - 2.6, b.y + b.height / 2],
-    [b.x + b.width + 1, b.y + b.height / 2],
-    [b.x - 0.5, b.y + b.height + 1],
-    [cx + 0.5, b.y + b.height + 1],
+    [b.x - 0.8, b.y - 1.2],
+    [cx, b.y - 1.2],
+    [b.x + b.width + 0.8, b.y - 1.2],
+    [b.x - 1.6, b.y + b.height / 2],
+    [b.x + b.width + 0.8, b.y + b.height / 2],
+    [b.x - 0.4, b.y + b.height + 1.2],
+    [cx + 0.4, b.y + b.height + 1.2],
   ];
   return PIECES.map((p, i) => ({
     id: p.id,

@@ -114,7 +114,7 @@
     font-size: 25px;
   }
   .practice-layout {
-    grid-template-columns: 144px minmax(0, 1fr);
+    grid-template-columns: 196px minmax(0, 1fr);
     gap: 15px;
   }
   .game-panel {
