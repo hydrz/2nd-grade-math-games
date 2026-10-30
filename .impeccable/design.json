@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T00:00:00Z",
+  "title": "Design System: 智慧小勇士",
+  "extensions": {
+    "colorMeta": {
+      "sea": { "role": "primary", "displayName": "深夜海军蓝", "canonical": "#16314f", "tonalRamp": ["#0a1420", "#10233a", "#16314f", "#1d4166", "#24507d", "#3f6d99", "#7299bd", "#c7dce8"] },
+      "sea-deep": { "role": "primary", "displayName": "远海蓝", "canonical": "#24507d", "tonalRamp": ["#0e1f33", "#122a44", "#16314f", "#1d4166", "#24507d", "#3f6d99", "#7299bd", "#c7dce8"] },
+      "sky": { "role": "neutral", "displayName": "薄荷海雾", "canonical": "#e4f3f1", "tonalRamp": ["#6f938f", "#8fb5b1", "#b0d3cf", "#cfe9e6", "#e4f3f1", "#eef8f6", "#f7fcfb", "#ffffff"] },
+      "sky-deep": { "role": "neutral", "displayName": "深薄荷", "canonical": "#cfe9e6", "tonalRamp": ["#8fb5b1", "#b0d3cf", "#cfe9e6", "#e4f3f1", "#eef8f6", "#f7fcfb", "#ffffff", "#ffffff"] },
+      "sun": { "role": "secondary", "displayName": "阳光金", "canonical": "#ffc531", "tonalRamp": ["#6b4d00", "#a37605", "#d19a10", "#ffc531", "#ffd45e", "#ffe48c", "#fff0bd", "#fffae3"] },
+      "sun-soft": { "role": "secondary", "displayName": "柔和金", "canonical": "#fff0bd", "tonalRamp": ["#6b4d00", "#a37605", "#d19a10", "#ffc531", "#ffd45e", "#ffe48c", "#fff0bd", "#fffae3"] },
+      "coral": { "role": "tertiary", "displayName": "珊瑚红", "canonical": "#ff6a55", "tonalRamp": ["#5a1408", "#8c2413", "#c43e28", "#ff6a55", "#ff8b79", "#ffb3a7", "#ffe1db", "#fff5f2"] },
+      "coral-hover": { "role": "tertiary", "displayName": "珊瑚红（按压加深）", "canonical": "#f25a44", "tonalRamp": ["#5a1408", "#8c2413", "#c43e28", "#ff6a55", "#ff8b79", "#ffb3a7", "#ffe1db", "#fff5f2"] },
+      "coral-soft": { "role": "tertiary", "displayName": "柔和珊瑚", "canonical": "#ffe1db", "tonalRamp": ["#5a1408", "#8c2413", "#c43e28", "#ff6a55", "#ff8b79", "#ffb3a7", "#ffe1db", "#fff5f2"] },
+      "leaf": { "role": "tertiary", "displayName": "叶绿", "canonical": "#17a46a", "tonalRamp": ["#083c26", "#0d5c3a", "#128a56", "#17a46a", "#4dbd8d", "#8dd6b1", "#d6f3e2", "#f0fbf5"] },
+      "leaf-soft": { "role": "tertiary", "displayName": "柔和叶绿", "canonical": "#d6f3e2", "tonalRamp": ["#083c26", "#0d5c3a", "#128a56", "#17a46a", "#4dbd8d", "#8dd6b1", "#d6f3e2", "#f0fbf5"] },
+      "grape": { "role": "tertiary", "displayName": "葡萄紫", "canonical": "#6f55e6", "tonalRamp": ["#241a5e", "#362a8e", "#4f3fbb", "#6f55e6", "#9182ee", "#b5abf4", "#e6e0ff", "#f6f4ff"] },
+      "grape-soft": { "role": "tertiary", "displayName": "柔和葡萄", "canonical": "#e6e0ff", "tonalRamp": ["#241a5e", "#362a8e", "#4f3fbb", "#6f55e6", "#9182ee", "#b5abf4", "#e6e0ff", "#f6f4ff"] },
+      "paper": { "role": "neutral", "displayName": "奶油纸", "canonical": "#fffaf0", "tonalRamp": ["#c9b88f", "#ddcfab", "#efe3c6", "#faf3e0", "#fffaf0", "#fffdf7", "#fffefb", "#ffffff"] },
+      "line": { "role": "neutral", "displayName": "雾线", "canonical": "#c6d9dc", "tonalRamp": ["#5f7a80", "#7f979d", "#9fb4ba", "#b8cad0", "#c6d9dc", "#d8e6e9", "#e9f1f3", "#f7fafb"] },
+      "piece-circle": { "role": "accent", "displayName": "圆形板 · 珊瑚", "canonical": "#ef7656", "tonalRamp": ["#5a1a0c", "#8c2f16", "#c94f2f", "#ef7656", "#f4927a", "#f8b3a2", "#fbd4c9", "#fef0ea"] },
+      "piece-semi-a": { "role": "accent", "displayName": "半圆板一 · 金", "canonical": "#f2bb51", "tonalRamp": ["#6b4d08", "#a3760f", "#d19a1e", "#f2bb51", "#f6cc7e", "#f9dda9", "#fbedd2", "#fef8ea"] },
+      "piece-semi-b": { "role": "accent", "displayName": "半圆板二 · 粉", "canonical": "#e89cbe", "tonalRamp": ["#5e1e3a", "#8f3059", "#c0527f", "#e89cbe", "#efb3ce", "#f5cadf", "#fae2ee", "#fdf4f8"] },
+      "piece-triangle": { "role": "accent", "displayName": "三角板 · 海蓝", "canonical": "#53a8c6", "tonalRamp": ["#12384a", "#1b566e", "#247a99", "#53a8c6", "#7fbdd4", "#abd2e2", "#d0e7f0", "#eaf6fa"] },
+      "piece-trapezoid": { "role": "accent", "displayName": "梯形板 · 长春花", "canonical": "#9290d4", "tonalRamp": ["#24204e", "#383373", "#514da8", "#9290d4", "#adacdf", "#c9c8ea", "#e2e1f5", "#f4f3fb"] },
+      "piece-center": { "role": "accent", "displayName": "中心板 · 叶绿", "canonical": "#58ad83", "tonalRamp": ["#123a2b", "#1b5942", "#247f5e", "#58ad83", "#7fc2a1", "#a8d6bf", "#d0eadd", "#eaf7f1"] },
+      "piece-large": { "role": "accent", "displayName": "曲形大板 · 橙", "canonical": "#e48643", "tonalRamp": ["#55280a", "#833f10", "#b65c1f", "#e48643", "#eba36c", "#f2c095", "#f8dabf", "#fdf1e5"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "快乐体展示字", "purpose": "仅限 H1–H3、品牌字与展示性大数字（分数、计时、步骤号）。" },
+      "body": { "displayName": "正文", "purpose": "全部说明文字与段落；根字号 15px（≥1800px 时 16px）。" },
+      "label": { "displayName": "辅助标签", "purpose": "面包屑、小标签、表头；最小 11px。" }
+    },
+    "shadows": [
+      { "name": "card-sticker", "value": "0 4px 0 #16314f, 0 12px 24px -6px rgba(22,49,79,0.16)", "purpose": "卡片/面板的默认贴纸静置深度（--shadow）。" },
+      { "name": "button-primary", "value": "0 4px 0 #16314f, 0 10px 20px -6px rgba(255,106,85,0.4)", "purpose": "主按钮：硬投影 + 珊瑚红同色晕影。" },
+      { "name": "button-primary-hover", "value": "0 6px 0 #16314f, 0 12px 24px -6px rgba(255,106,85,0.45)", "purpose": "主按钮上浮态，配 translateY(-2px)。" },
+      { "name": "button-secondary", "value": "0 3px 0 #16314f", "purpose": "白贴纸薄一号；active 降为 0 1px 0。" },
+      { "name": "sidebar", "value": "6px 0 24px -10px rgba(22,49,79,0.4)", "purpose": "侧栏纯柔和晕影，避免与主内容相撞。" },
+      { "name": "match-board-inset", "value": "inset 0 0 0 6px #24507d", "purpose": "火柴黑板专属内嵌远海蓝框。" },
+      { "name": "banner", "value": "0 16px 32px -12px rgba(22,49,79,0.35)", "purpose": "首页横幅大卡氛围落影。" }
+    ],
+    "motion": [
+      { "name": "sticker-press", "value": "transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease", "purpose": "贴纸按压物理：阴影变化必须与位移成对。" },
+      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce 关闭全部 animation/transition", "purpose": "全局强制（base.css），新动效自动被覆盖。" }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "650px" },
+      { "name": "tablet", "value": "900px" },
+      { "name": "narrow-desktop", "value": "1150px" },
+      { "name": "desktop-enhanced", "value": "1450px" },
+      { "name": "widescreen-2k", "value": "1800px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "主按钮（行动贴纸）",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "珊瑚红底 + 海军蓝描边与硬投影；hover 上浮、按下陷落。",
+      "html": "<button class=\"ds-btn-primary\">检查答案</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;background:#ff6a55;color:#fff;border:2px solid #16314f;border-radius:14px;font:800 15px/1.4 'Nunito Variable','Noto Sans SC Variable',sans-serif;white-space:nowrap;cursor:pointer;box-shadow:0 4px 0 #16314f,0 10px 20px -6px rgba(255,106,85,.4);transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.ds-btn-primary:hover{background:#f25a44;transform:translateY(-2px);box-shadow:0 6px 0 #16314f,0 12px 24px -6px rgba(255,106,85,.45)}.ds-btn-primary:active{transform:translateY(2px);box-shadow:0 2px 0 #16314f}.ds-btn-primary:focus-visible{outline:3px solid #6f55e6;outline-offset:3px}.ds-btn-primary:disabled{opacity:.5;cursor:default}"
+    },
+    {
+      "name": "次级按钮（白贴纸）",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "纯白底 + 海军蓝字与描边，薄投影；hover 柔和金底。",
+      "html": "<button class=\"ds-btn-secondary\">给我提示</button>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;background:#fff;color:#16314f;border:2px solid #16314f;border-radius:14px;font:800 15px/1.4 'Nunito Variable','Noto Sans SC Variable',sans-serif;white-space:nowrap;cursor:pointer;box-shadow:0 3px 0 #16314f;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.ds-btn-secondary:hover{background:#fff0bd;transform:translateY(-1px)}.ds-btn-secondary:active{transform:translateY(2px);box-shadow:0 1px 0 #16314f}.ds-btn-secondary:focus-visible{outline:3px solid #6f55e6;outline-offset:3px}"
+    },
+    {
+      "name": "金色 CTA（横幅按钮）",
+      "kind": "button",
+      "refersTo": "button-sun",
+      "description": "阳光金底 + 海军蓝字，主按钮同款物理；用于横幅与提交。",
+      "html": "<button class=\"ds-btn-sun\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M8 5v14l11-7z\"/></svg>开始第一关</button>",
+      "css": ".ds-btn-sun{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:12px 20px;background:#ffc531;color:#16314f;border:2px solid #16314f;border-radius:14px;font:800 15px/1.4 'Nunito Variable','Noto Sans SC Variable',sans-serif;white-space:nowrap;cursor:pointer;box-shadow:0 4px 0 #16314f;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.ds-btn-sun:hover{background:#ffd45e;transform:translateY(-2px);box-shadow:0 6px 0 #16314f}.ds-btn-sun:active{transform:translateY(2px);box-shadow:0 1px 0 #16314f}.ds-btn-sun:focus-visible{outline:3px solid #6f55e6;outline-offset:3px}"
+    },
+    {
+      "name": "小标签（胶囊）",
+      "kind": "chip",
+      "refersTo": "tag-pill",
+      "description": "柔和葡萄底胶囊，13px/700；纯展示。",
+      "html": "<span class=\"ds-tag-pill\">七巧板分解</span>",
+      "css": ".ds-tag-pill{display:inline-flex;align-items:center;padding:4px 12px;background:#e6e0ff;color:#3d2ca8;border-radius:999px;font:700 13px/1.5 'Nunito Variable','Noto Sans SC Variable',sans-serif;white-space:nowrap}"
+    },
+    {
+      "name": "游戏面板（奶油纸大卡）",
+      "kind": "card",
+      "description": "奶油纸底 + 2.5px 海军蓝描边 + 贴纸静置投影；标题快乐体、正文海雾蓝灰。",
+      "html": "<div class=\"ds-card-panel\"><h3>先拼一拼，再画出七块的分割线</h3><p>左边自由拼组七块板；右边照着轮廓点两个圆点，画出每块板的分界线。</p></div>",
+      "css": ".ds-card-panel{background:#fffaf0;border:2.5px solid #16314f;border-radius:26px;box-shadow:0 4px 0 #16314f,0 12px 24px -6px rgba(22,49,79,.16);padding:20px;max-width:520px}.ds-card-panel h3{margin:0;font:400 22px/1.3 'ZCOOL KuaiLe','Nunito Variable','Noto Sans SC Variable',sans-serif;color:#16314f}.ds-card-panel p{margin:8px 0 0;font:500 14px/1.65 'Nunito Variable','Noto Sans SC Variable',sans-serif;color:#4f6580}"
+    },
+    {
+      "name": "侧栏导航条目（航海日志）",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "深夜海军蓝底上的条目；当前项阳光金底——金色只奖赏。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主要导航\"><button class=\"ds-nav-item\">闯关地图</button><button class=\"ds-nav-item ds-nav-item--active\">七巧板 · 分解</button><button class=\"ds-nav-item\">火柴棒挑战</button></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:7px;background:#16314f;padding:16px;border-radius:16px;width:220px}.ds-nav-item{display:flex;align-items:center;gap:13px;min-height:50px;padding:11px 16px;border:0;border-radius:14px;background:none;color:#cfe6e8;font:700 15px/1.4 'Nunito Variable','Noto Sans SC Variable',sans-serif;text-align:left;cursor:pointer;transition:all .15s ease}.ds-nav-item:hover{background:rgba(255,255,255,.12);color:#fff}.ds-nav-item--active{background:#ffc531;color:#16314f;font-weight:800;box-shadow:0 4px 0 -1px #c78f00}.ds-nav-item:focus-visible{outline:3px solid #6f55e6;outline-offset:3px}"
+    },
+    {
+      "name": "星币钱包（奖励胶囊）",
+      "kind": "custom",
+      "refersTo": "star-wallet",
+      "description": "阳光金胶囊 + 海军蓝字，星星计数专用。",
+      "html": "<span class=\"ds-star-wallet\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/></svg>12<small>颗星</small></span>",
+      "css": ".ds-star-wallet{display:inline-flex;align-items:center;gap:8px;background:#ffc531;color:#16314f;border:2px solid #16314f;border-radius:999px;padding:6px 16px;font:900 19px/1.4 'Nunito Variable','Noto Sans SC Variable',sans-serif;box-shadow:0 3px 0 #16314f}.ds-star-wallet small{color:#6b5000;font-size:13px;font-weight:700}"
+    },
+    {
+      "name": "成功反馈条",
+      "kind": "custom",
+      "description": "柔和叶绿底 + 海军蓝描边；状态同时用图标与文字表达。",
+      "html": "<div class=\"ds-feedback-success\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 11.08V12a10 10 0 1 1-5.93-9.14\"/><path d=\"M22 4L12 14.01l-3-3\"/></svg><div><strong>太棒了，分解正确！</strong><p>获得 3 颗星，继续下一关吧。</p></div></div>",
+      "css": ".ds-feedback-success{display:flex;align-items:center;gap:13px;background:#d6f3e2;color:#0b6b43;border:2px solid #16314f;border-radius:18px;padding:16px;max-width:480px}.ds-feedback-success strong{font:800 18px/1.4 'Nunito Variable','Noto Sans SC Variable',sans-serif}.ds-feedback-success p{margin:4px 0 0;font:500 14px/1.65 'Nunito Variable','Noto Sans SC Variable',sans-serif;color:#0b6b43}"
+    }
+  ],
+  "narrative": {
+    "northStar": "航海探险手账",
+    "overview": "这是一个孩子的航海探险手账：薄荷海雾绿的波点纸面上，贴着一张张奶油纸底的厚贴纸——每张贴纸都有深海墨蓝的粗描边和一层可以「按下去」的硬投影。它是明亮、厚实、大方块的糖果贴纸世界，活力外露但从不刺眼：大面积的静色（海雾绿、奶油纸、深海蓝）承载内容，高饱和的金黄、珊瑚红、叶绿、葡萄紫只在值得庆祝和需要注意的地方出现。练习画布（画线区、拼图区、火柴黑板）保持清楚安静，贴纸的热闹留给导航、奖励与反馈。\n\n结构上它是两层世界：tokens.css 定义语义变量名（--ink、--paper、--radius……），adventure.css 作为主题层覆盖它们的值并补充航海色板。adventure.css 是唯一生效的世界；tokens.css 里的绿纸旧值已被覆盖退役，只许沿用变量名、不许沿用旧值。主题层可以覆盖值，永远不能改变量名。",
+    "keyCharacteristics": [
+      "深海墨蓝 2–2.5px 粗描边包住每一个「立起来的」表面：按钮、卡片、画板、输入框",
+      "硬投影 0 4px 0 var(--sea) 是贴纸的物理厚度，按下时陷落（4px→2px，上浮时增高到 6px）",
+      "虚线边框 = 未完成 / 空位 / 幽灵状态的专属语言",
+      "金黄色只属于奖励与成就：星星、勋章、星币钱包、当前导航、提交按钮",
+      "七块拼板各有固定的糖果色，是全套图形语言的取色基准",
+      "ZCOOL KuaiLe 只做展示层（标题、大数字），正文永远是 Nunito + 思源黑体",
+      "44px 最小触控目标、focus-visible 葡萄紫外圈、prefers-reduced-motion 全局关闭动效"
+    ],
+    "rules": [
+      { "name": "深海描边规则", "body": "凡是「立起来」的表面——按钮、卡片、画板、计时器、钱包——必须有 2–2.5px 的深夜海军蓝实线描边。没有海军蓝描边的彩色块不属于这个世界（小标签等扁平胶囊除外）。", "section": "colors" },
+      { "name": "金色只奖赏规则", "body": "阳光金只出现在奖励、成就、当前状态（当前导航/当前关卡）上。用它做普通装饰或危险提示都是破坏语义。", "section": "colors" },
+      { "name": "虚线即留白规则", "body": "虚线描边专用于「还没有」的东西：未获得勋章、空状态、答案便签、火柴空位、目标轮廓、手账便签。实线是承诺，虚线是期待。", "section": "shapes" },
+      { "name": "贴纸按压规则", "body": "硬投影编码可按压性：静置 4px → hover 增至 6px 并 translateY(-2px)（上浮）→ active 降为 2px 并 translateY(2px)（陷落）。阴影变化必须与位移成对出现，禁止只动其一。", "section": "elevation" },
+      { "name": "快乐体不上正文规则", "body": "ZCOOL KuaiLe 只出现在 H1–H3、品牌字、展示性大数字（分数/计时/步骤号）上；任何成段说明、按钮内长文案都用 Nunito。", "section": "typography" }
+    ],
+    "dos": [
+      "Do 给每个新按钮/卡片补齐全套贴纸物理：2px 海军蓝描边 + 0 4px 0 硬投影 + hover/active 的位移配对，transition: 0.15s ease。",
+      "Do 保持 44px 最小触控目标与 focus-visible 葡萄紫外圈；新交互控件一律继承 base.css 的焦点样式。",
+      "Do 新图形从拼板糖果色（7 色）与四强调色（金/珊瑚/叶绿/葡萄）中取色；中性结构一律海军蓝 + 雾线。",
+      "Do 标题与大数字用 ZCOOL KuaiLe，正文用 Nunito + 思源黑体；计时器/角度等数字读数加 font-variant-numeric: tabular-nums。",
+      "Do 新页面沿用「海雾底 + 奶油纸卡」双层结构，页面块 max-width: 1720px 居中。",
+      "Do 用语义变量（var(--sea)、var(--sun)、var(--coral)……）取色；主题层只许覆盖值，不许改变量名。"
+    ],
+    "donts": [
+      "Don't 使用 tokens.css 里被退役的绿纸旧值（#167c69 teal、#d77d40 orange、#f7f8f2 底色）——那是被 adventure.css 覆盖前的世界；--teal/--orange 变量在主题下已分别解析为叶绿与珊瑚红。",
+      "Don't 给按钮只加柔和阴影或只做位移——硬投影与位移必须成对（贴纸按压规则）。",
+      "Don't 把阳光金用于普通装饰、错误提示或大面积背景——金色只属于奖励、成就与当前状态。",
+      "Don't 用实线边框表达「未完成/空位」——那是虚线的语义（虚线即留白规则）。",
+      "Don't 让快乐体出现在成段正文或按钮长文案中；辅助文字不要小于 11px。",
+      "Don't 新增色板外的强调色相（荧光色、粉紫渐变等）；不做渐变填充插画；动效必须经受 prefers-reduced-motion 检查（全局已强制关闭）。",
+      "Don't 打破「海雾底上放奶油纸卡」的层次——内容卡直接贴白底页面或给页面底换纯白都会让贴纸失去纸面。"
+    ]
+  }
+}
