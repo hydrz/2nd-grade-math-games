@@ -56,6 +56,10 @@ __pycache__/
 **/.impeccable/live/*.png
 # impeccable-ignore-end
 
-.edgeone
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*
+
 # TS incremental build caches
 *.tsbuildinfo
