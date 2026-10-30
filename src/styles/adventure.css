@@ -884,6 +884,15 @@ select {
 .exam-navigation .active small {
   color: var(--sun);
 }
+.exam-navigation .quit-exam {
+  background: #fff;
+  border: 2px solid #eebfb6;
+  color: #b43a22;
+}
+.exam-navigation .quit-exam:hover {
+  border-color: #b43a22;
+  color: #96280f;
+}
 .exam-navigation .submit-exam {
   background: var(--sun);
   color: var(--sea);

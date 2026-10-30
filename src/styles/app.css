@@ -194,13 +194,8 @@
   font-weight: 500;
 }
 .sound-toggle {
-  background: #f2f6ec;
+  background: var(--paper);
   color: #94a58e;
-}
-.sound-toggle:hover,
-.sound-toggle.active {
-  background: #e4efe3;
-  color: var(--teal);
 }
 .page-title {
   display: flex;

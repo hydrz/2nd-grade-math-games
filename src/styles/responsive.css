@@ -7,34 +7,15 @@
     min-height: 300px;
     padding: 42px 48px;
   }
-  .ticket-copy h2 {
-    font-size: 42px;
-  }
   .ticket-art > svg {
     height: 190px;
   }
   .realm-row {
     min-height: 120px;
   }
-  .row-main h3 {
-    font-size: 26px;
-  }
-  .row-main p {
-    font-size: 14px;
-  }
-  .captain-invite {
-    padding: 26px 34px;
-  }
-  .captain-invite h3 {
-    font-size: 27px;
-  }
-  .page-title h1 {
-    font-size: 32px;
-  }
 }
 @media (max-width: 1150px) {
   .sidebar {
-    width: 194px;
     padding: 27px 13px 15px;
   }
   .brand {
@@ -45,11 +26,6 @@
     height: 40px;
     width: 38px;
   }
-  .main-content {
-    margin-left: 194px;
-    width: calc(100% - 194px);
-    padding: 0 25px 25px;
-  }
   .nav-item {
     font-size: 12px;
     padding: 11px 12px;
@@ -57,9 +33,6 @@
   .departure-ticket {
     padding: 30px 32px;
     gap: 24px;
-  }
-  .ticket-copy h2 {
-    font-size: 32px;
   }
   .ticket-art {
     min-height: 170px;
@@ -93,9 +66,6 @@
   .captain-invite h3 {
     font-size: 20px;
   }
-  .page-title h1 {
-    font-size: 25px;
-  }
   .practice-layout {
     grid-template-columns: 196px minmax(0, 1fr);
     gap: 15px;
@@ -124,7 +94,6 @@
 }
 @media (max-width: 900px) {
   .sidebar {
-    width: 176px;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -148,11 +117,6 @@
     padding-left: 11px;
     padding-right: 9px;
   }
-  .main-content {
-    margin-left: 176px;
-    width: calc(100% - 176px);
-    padding: 0 20px 20px;
-  }
   .topbar {
     height: 70px;
     margin-bottom: 23px;
@@ -172,9 +136,6 @@
     padding: 26px;
     gap: 18px;
     min-height: 240px;
-  }
-  .ticket-copy h2 {
-    font-size: 27px;
   }
   .ticket-art {
     min-height: 150px;
@@ -330,7 +291,6 @@
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.2s;
-    width: 224px;
     padding: 28px 18px 15px;
   }
   .sidebar.open {
@@ -352,18 +312,14 @@
     gap: 13px;
     padding: 11px 16px;
   }
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 0 18px 24px;
-  }
   .mobile-menu {
     display: flex;
-    position: absolute;
+    position: fixed;
     top: 14px;
     left: 13px;
-    z-index: 21;
-    background: #f7f8f2;
+    /* Below the nav scrim (19) so the open drawer covers the toggle. */
+    z-index: 18;
+    background: var(--paper);
   }
   .sidebar.open ~ .main-content {
     pointer-events: none;

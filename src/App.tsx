@@ -122,6 +122,23 @@ export function AppContent() {
   const [mobileNav, setMobileNav] = useState(false),
     [settings, setSettings] = useState(false),
     [help, setHelp] = useState(false);
+  const dialogRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (!settings && !help) return;
+    const opener = document.activeElement as HTMLElement | null;
+    dialogRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSettings(false);
+        setHelp(false);
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      opener?.focus();
+    };
+  }, [settings, help]);
   const [rankingType, setRankingType] = useState<ExamType>('mixed'),
     [now, setNow] = useState(Date.now),
     [resultScore, setResultScore] = useState<number | null>(null);
@@ -889,6 +906,19 @@ export function AppContent() {
                       </button>
                     ))}
                     <button
+                      className="quit-exam"
+                      onClick={() => {
+                        if (
+                          confirm(
+                            '退出后这场比赛的成绩不会保存。确定退出吗？',
+                          )
+                        )
+                          update((s) => ({ ...s, competition: null }));
+                      }}
+                    >
+                      退出比赛
+                    </button>
+                    <button
                       className="submit-exam"
                       onClick={() => {
                         if (confirm('确定交卷吗？交卷后会立即判分。'))
@@ -1280,6 +1310,8 @@ export function AppContent() {
             role="dialog"
             aria-modal="true"
             aria-label={settings ? '我的档案与存档' : '玩法小指南'}
+            tabIndex={-1}
+            ref={dialogRef}
             onClick={(e) => e.stopPropagation()}
           >
             <button

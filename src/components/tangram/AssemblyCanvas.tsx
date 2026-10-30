@@ -156,6 +156,7 @@ export function AssemblyCanvas({
           <span className="angle-readout" aria-label="选中拼板角度">
             {Math.round(current.find((p) => p.id === selected)!.angle % 360)}°
           </span>
+          {action}
           <button
             className="tool"
             aria-label="撤销组装"
@@ -182,7 +183,6 @@ export function AssemblyCanvas({
           >
             <Redo2 size={18} />
           </button>
-          {action}
         </div>
       </div>
       <svg
